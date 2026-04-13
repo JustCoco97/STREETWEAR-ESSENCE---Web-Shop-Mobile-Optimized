@@ -1,6 +1,3 @@
-Admin · HTML
-Copia
-
 <!doctype html>
 <html lang="it">
   <head>
@@ -15,16 +12,18 @@ Copia
       rel="stylesheet"
     />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      /* PROTEZIONE: Nasconde la pagina finché non viene messa la password */
       body {
+        display: none;
         background: #000;
         color: #fff;
         font-family: "Inter", sans-serif;
         padding: 15px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
       .admin-wrap {
         max-width: 500px;
@@ -70,9 +69,6 @@ Copia
         gap: 10px;
         margin-bottom: 18px;
       }
-      .upload-grid input {
-        margin-bottom: 0;
-      }
       .btn-pubblica {
         width: 100%;
         padding: 18px;
@@ -84,10 +80,6 @@ Copia
         text-transform: uppercase;
         border-radius: 6px;
         font-size: 15px;
-        font-family: "Inter", sans-serif;
-      }
-      .btn-pubblica:active {
-        opacity: 0.8;
       }
       #status {
         margin-top: 12px;
@@ -95,12 +87,6 @@ Copia
         color: #39ff14;
         text-align: center;
         font-size: 14px;
-        min-height: 20px;
-      }
-      .gestione-prodotti {
-        margin-top: 35px;
-        border-top: 1px solid #222;
-        padding-top: 20px;
       }
       .item-gestione {
         display: flex;
@@ -111,20 +97,10 @@ Copia
         margin-bottom: 10px;
         border-radius: 6px;
         border-left: 4px solid #39ff14;
-        gap: 10px;
       }
       .item-info {
         font-size: 13px;
         font-weight: 900;
-        flex: 1;
-        word-break: break-word;
-      }
-      .item-info span {
-        color: #666;
-        font-size: 10px;
-        font-weight: 400;
-        display: block;
-        margin-top: 3px;
       }
       .btn-elimina {
         background: #ff3131;
@@ -132,35 +108,24 @@ Copia
         border: none;
         padding: 8px 12px;
         border-radius: 4px;
-        cursor: pointer;
         font-weight: 900;
-        font-size: 11px;
-        white-space: nowrap;
-        font-family: "Inter", sans-serif;
       }
       .btn-torna {
         display: block;
         text-align: center;
         color: #555;
         text-decoration: none;
-        font-size: 12px;
         margin-top: 20px;
-        font-weight: bold;
-      }
-      .btn-torna:hover {
-        color: #fff;
       }
     </style>
   </head>
   <body>
- 
-    <!-- PANNELLO ADMIN - SI APRE DIRETTAMENTE -->
     <div class="admin-wrap" id="panel">
       <h2>📦 CARICA ARTICOLO</h2>
- 
+
       <span class="label-text">Nome Prodotto</span>
       <input type="text" id="prod-name" placeholder="es: FELPA LOGO TRAP" />
- 
+
       <span class="label-text">Categoria</span>
       <select id="prod-cat">
         <option value="preferiti">⭐ I NOSTRI PREFERITI (Home Slider)</option>
@@ -172,10 +137,10 @@ Copia
         <option value="scarpe">SCARPE</option>
         <option value="cappelli">CAPPELLI</option>
       </select>
- 
+
       <span class="label-text">Foto Copertina *</span>
       <input type="file" id="main-img" accept="image/*" />
- 
+
       <span class="label-text">Altre foto dettagli (max 5)</span>
       <div class="upload-grid">
         <input type="file" class="extra-img" accept="image/*" />
@@ -184,19 +149,30 @@ Copia
         <input type="file" class="extra-img" accept="image/*" />
         <input type="file" class="extra-img" accept="image/*" />
       </div>
- 
+
       <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA SUL SITO</button>
       <div id="status"></div>
- 
-      <div class="gestione-prodotti">
-        <h2>🗂 GESTISCI PRODOTTI</h2>
+
+      <div class="gestione-prodotti" style="margin-top: 30px">
+        <h2 style="font-size: 1rem">🗂 GESTISCI PRODOTTI</h2>
         <div id="lista-prodotti"></div>
       </div>
- 
+
       <a href="index.html" class="btn-torna">← Torna al sito</a>
     </div>
- 
+
     <script type="module">
+      // SCRIPT PASS PROTEZIONE
+      window.addEventListener("DOMContentLoaded", () => {
+        const pass = prompt("Password Amministratore:");
+        if (pass === "essence2026") {
+          document.body.style.display = "block";
+        } else {
+          alert("Accesso negato!");
+          window.location.href = "index.html";
+        }
+      });
+
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
       import {
         getFirestore,
@@ -214,7 +190,7 @@ Copia
         uploadBytes,
         getDownloadURL,
       } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
- 
+
       const firebaseConfig = {
         apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
         authDomain: "streetwearessence2026.firebaseapp.com",
@@ -223,75 +199,67 @@ Copia
         messagingSenderId: "926228477709",
         appId: "1:926228477709:web:8a15d11ac26022f1fee244",
       };
- 
+
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
       const storage = getStorage(app);
- 
-      // CARICA LISTA PRODOTTI SUBITO
+
       function caricaProdotti() {
         const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
         onSnapshot(q, (snapshot) => {
           const lista = document.getElementById("lista-prodotti");
           lista.innerHTML = "";
-          if (snapshot.empty) {
-            lista.innerHTML = "<p style='color:#555; font-size:13px;'>Nessun prodotto caricato.</p>";
-            return;
-          }
           snapshot.forEach((docSnap) => {
             const p = docSnap.data();
             lista.innerHTML += `
               <div class="item-gestione">
-                <div class="item-info">
-                  ${p.nome}
-                  <span>${p.sezione.toUpperCase()}</span>
-                </div>
+                <div class="item-info">${p.nome} <span>${p.sezione.toUpperCase()}</span></div>
                 <button class="btn-elimina" onclick="eliminaProdotto('${docSnap.id}')">ELIMINA</button>
               </div>`;
           });
         });
       }
- 
       caricaProdotti();
- 
-      // ELIMINA PRODOTTO
+
       window.eliminaProdotto = async (id) => {
         if (confirm("Vuoi davvero eliminare questo prodotto?")) {
           await deleteDoc(doc(db, "prodotti", id));
         }
       };
- 
-      // PUBBLICA PRODOTTO
+
       document.getElementById("upload-btn").onclick = async () => {
         const status = document.getElementById("status");
         const name = document.getElementById("prod-name").value.trim();
         const sezione = document.getElementById("prod-cat").value;
         const mainImgFile = document.getElementById("main-img").files[0];
         const extraFiles = document.querySelectorAll(".extra-img");
- 
+
         if (!name || !mainImgFile) {
           alert("⚠️ Nome e Foto copertina sono obbligatori!");
           return;
         }
- 
+
         status.innerHTML = "⏳ CARICAMENTO IN CORSO...";
         document.getElementById("upload-btn").disabled = true;
- 
+
         try {
           const mainRef = ref(storage, `prodotti/${Date.now()}_main`);
           await uploadBytes(mainRef, mainImgFile);
           const mainUrl = await getDownloadURL(mainRef);
- 
+
           let extraUrls = [];
           for (let input of extraFiles) {
             if (input.files[0]) {
-              const extraRef = ref(storage, `prodotti/${Date.now()}_${Math.random()}`);
+              const extraRef = ref(
+                storage,
+                `prodotti/${Date.now()}_${Math.random()}`,
+              );
               await uploadBytes(extraRef, input.files[0]);
               const url = await getDownloadURL(extraRef);
               extraUrls.push(url);
             }
           }
- 
+
           await addDoc(collection(db, "prodotti"), {
             nome: name,
             sezione: sezione,
@@ -299,18 +267,16 @@ Copia
             fotoExtra: extraUrls,
             data: new Date(),
           });
- 
+
           status.innerHTML = "✅ ARTICOLO PUBBLICATO!";
           document.getElementById("prod-name").value = "";
           document.getElementById("main-img").value = "";
           extraFiles.forEach((i) => (i.value = ""));
         } catch (e) {
           status.innerHTML = "❌ ERRORE: " + e.message;
-          console.error(e);
         }
- 
         document.getElementById("upload-btn").disabled = false;
       };
     </script>
   </body>
-</html
+</html>
