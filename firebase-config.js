@@ -1,4 +1,4 @@
-// firebase-config.js
+// firebase-config.js (VERSIONE COMPLETA)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import {
   getFirestore,
@@ -8,7 +8,15 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  query,
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"; // <--- MANCAVA QUESTO!
 
 const firebaseConfig = {
   apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
@@ -21,5 +29,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app); // <--- MANCAVA QUESTO!
 
-export { db, collection, getDocs, onSnapshot, addDoc, deleteDoc, doc };
+export {
+  db,
+  storage,
+  collection,
+  getDocs,
+  onSnapshot,
+  addDoc,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+};
