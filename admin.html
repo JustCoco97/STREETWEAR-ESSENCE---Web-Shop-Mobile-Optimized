@@ -2,10 +2,7 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin | Streetwear Essence</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap"
@@ -17,11 +14,6 @@
         color: #fff;
         font-family: "Inter", sans-serif;
         padding: 15px;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
       }
       .admin-wrap {
         max-width: 500px;
@@ -37,7 +29,6 @@
         font-size: 1.3rem;
         margin-bottom: 20px;
         text-transform: uppercase;
-        letter-spacing: 1px;
       }
       .label-text {
         font-size: 0.7rem;
@@ -46,7 +37,6 @@
         margin-bottom: 6px;
         display: block;
         font-weight: 800;
-        letter-spacing: 1px;
       }
       input,
       select {
@@ -56,15 +46,7 @@
         background: #111;
         border: 1px solid #222;
         color: #fff;
-        font-weight: bold;
         border-radius: 6px;
-        font-size: 14px;
-      }
-      .upload-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-bottom: 18px;
       }
       .btn-pubblica {
         width: 100%;
@@ -74,9 +56,7 @@
         border: none;
         font-weight: 900;
         cursor: pointer;
-        text-transform: uppercase;
         border-radius: 6px;
-        font-size: 15px;
       }
       #status {
         margin-top: 12px;
@@ -84,42 +64,12 @@
         color: #39ff14;
         text-align: center;
       }
-      .item-gestione {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #111;
-        padding: 12px;
-        margin-bottom: 10px;
-        border-radius: 6px;
-        border-left: 4px solid #39ff14;
-      }
-      .item-info {
-        font-size: 13px;
-        font-weight: 900;
-      }
-      .btn-elimina {
-        background: #ff3131;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-weight: 900;
-      }
-      .btn-torna {
-        display: block;
-        text-align: center;
-        color: #555;
-        text-decoration: none;
-        margin-top: 20px;
-      }
     </style>
   </head>
   <body id="admin-body" style="display: none">
     <div class="admin-wrap">
       <h2>📦 CARICA ARTICOLO</h2>
       <input type="text" id="prod-name" placeholder="NOME PRODOTTO" />
-
       <span class="label-text">Categoria</span>
       <select id="prod-cat">
         <option value="preferiti">⭐ PREFERITI (Slider)</option>
@@ -131,38 +81,18 @@
         <option value="scarpe">SCARPE</option>
         <option value="cappelli">CAPPELLI</option>
       </select>
-
       <span class="label-text">Foto Copertina</span>
       <input type="file" id="main-img" accept="image/*" />
-
-      <span class="label-text">Altre foto (max 5)</span>
-      <div class="upload-grid">
-        <input type="file" class="extra-img" accept="image/*" />
-        <input type="file" class="extra-img" accept="image/*" />
-        <input type="file" class="extra-img" accept="image/*" />
-        <input type="file" class="extra-img" accept="image/*" />
-        <input type="file" class="extra-img" accept="image/*" />
-      </div>
-
       <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA</button>
       <div id="status"></div>
-
-      <div
-        style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px"
-      >
-        <h2 style="font-size: 1rem">🗂 GESTISCI</h2>
-        <div id="lista-prodotti"></div>
-      </div>
-      <a href="index.html" class="btn-torna">← Torna al sito</a>
     </div>
 
     <script>
-      // CONTROLLO PASSWORD IMMEDIATO
-      const pass = prompt("Password Amministratore:");
+      const pass = prompt("Password:");
       if (pass === "essence2026") {
         document.getElementById("admin-body").style.display = "block";
       } else {
-        alert("Accesso negato!");
+        alert("Negato");
         window.location.href = "index.html";
       }
     </script>
@@ -173,11 +103,6 @@
         getFirestore,
         addDoc,
         collection,
-        deleteDoc,
-        doc,
-        onSnapshot,
-        query,
-        orderBy,
       } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
       import {
         getStorage,
@@ -190,7 +115,7 @@
         apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
         authDomain: "streetwearessence2026.firebaseapp.com",
         projectId: "streetwearessence2026",
-        storageBucket: "streetwearessence2026.firebasestorage.app",
+        storageBucket: "streetwearessence2026.firebasestorage.app", // Verificato dallo screenshot
         messagingSenderId: "926228477709",
         appId: "1:926228477709:web:8a15d11ac26022f1fee244",
       };
@@ -199,72 +124,44 @@
       const db = getFirestore(app);
       const storage = getStorage(app);
 
-      // LISTA PRODOTTI
-      const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
-      onSnapshot(q, (snapshot) => {
-        const lista = document.getElementById("lista-prodotti");
-        lista.innerHTML = "";
-        snapshot.forEach((docSnap) => {
-          const p = docSnap.data();
-          lista.innerHTML += `
-            <div class="item-gestione">
-              <div class="item-info">${p.nome} <span>${p.sezione.toUpperCase()}</span></div>
-              <button class="btn-elimina" onclick="eliminaProdotto('${docSnap.id}')">ELIMINA</button>
-            </div>`;
-        });
-      });
-
-      window.eliminaProdotto = async (id) => {
-        if (confirm("Eliminare?")) await deleteDoc(doc(db, "prodotti", id));
-      };
-
-      // UPLOAD
       document.getElementById("upload-btn").onclick = async () => {
+        const name = document.getElementById("prod-name").value;
+        const file = document.getElementById("main-img").files[0];
         const status = document.getElementById("status");
-        const name = document.getElementById("prod-name").value.trim();
-        const sezione = document.getElementById("prod-cat").value;
-        const mainImgFile = document.getElementById("main-img").files[0];
-        const extraFiles = document.querySelectorAll(".extra-img");
 
-        if (!name || !mainImgFile) return alert("Mancano dati!");
+        if (!name || !file) return alert("Metti nome e foto!");
 
-        status.innerHTML = "⏳ CARICAMENTO...";
+        status.innerHTML = "⏳ CARICAMENTO IN CORSO...";
         document.getElementById("upload-btn").disabled = true;
 
         try {
-          const mainRef = ref(storage, "prodotti/" + Date.now() + "_main");
-          await uploadBytes(mainRef, mainImgFile);
-          const mainUrl = await getDownloadURL(mainRef);
+          // Creazione riferimento cartella prodotti
+          const storageRef = ref(
+            storage,
+            "prodotti/" + Date.now() + "_" + file.name,
+          );
 
-          let extraUrls = [];
-          for (let input of extraFiles) {
-            if (input.files[0]) {
-              const extraRef = ref(
-                storage,
-                "prodotti/" + Date.now() + "_" + Math.random(),
-              );
-              await uploadBytes(extraRef, input.files[0]);
-              const url = await getDownloadURL(extraRef);
-              extraUrls.push(url);
-            }
-          }
+          // Upload
+          const snapshot = await uploadBytes(storageRef, file);
+          const url = await getDownloadURL(snapshot.ref);
 
+          // Salvataggio nel database
           await addDoc(collection(db, "prodotti"), {
             nome: name,
-            sezione: sezione,
-            fotoPrincipale: mainUrl,
-            fotoExtra: extraUrls,
+            sezione: document.getElementById("prod-cat").value,
+            fotoPrincipale: url,
             data: new Date(),
           });
 
-          status.innerHTML = "✅ PUBBLICATO!";
-          alert("Successo!");
+          status.innerHTML = "✅ SUCCESSO!";
+          alert("Fatto! La cartella 'prodotti' è stata aggiornata.");
           location.reload();
         } catch (e) {
-          status.innerHTML = "❌ ERRORE";
           console.error(e);
+          alert("Errore: " + e.message);
+          status.innerHTML = "❌ ERRORE";
+          document.getElementById("upload-btn").disabled = false;
         }
-        document.getElementById("upload-btn").disabled = false;
       };
     </script>
   </body>
