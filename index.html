@@ -68,10 +68,35 @@
         font-weight: 900;
         color: #39ff14;
       }
+
+      .info-section {
+        padding: 50px 20px;
+        background: #000;
+        border-top: 1px solid #111;
+        margin-top: 40px;
+      }
+      .info-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        max-width: 1100px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .info-block h3 {
+        color: #bc13fe;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        font-weight: 900;
+      }
+      .info-block p {
+        color: #888;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
     </style>
   </head>
   <body class="no-scroll">
-    <!-- BOTTONE ADMIN FISSO IN BASSO A SINISTRA -->
     <button
       class="mobile-admin-btn"
       onclick="window.location.href = 'admin.html'"
@@ -79,7 +104,6 @@
       🔐 ADMIN
     </button>
 
-    <!-- INTRO ANIMATA -->
     <div id="intro">
       <div class="intro-content">
         <div class="img-frame-poster">
@@ -90,7 +114,6 @@
       </div>
     </div>
 
-    <!-- CONTENUTO PRINCIPALE -->
     <div id="site-content" style="opacity: 0; transition: opacity 0.5s">
       <header>
         <div class="header-container">
@@ -131,12 +154,52 @@
         <div class="categories-grid" id="categories-grid"></div>
       </section>
 
-      <footer class="main-footer" style="text-align: center">
-        <p>&copy; 2026 STREETWEAR ESSENCE</p>
-      </footer>
+      <section class="info-section">
+        <div class="info-container">
+          <div class="info-block">
+            <h3>QUALITÀ PREMIUM 💎</h3>
+            <p>
+              Selezioniamo solo i migliori materiali per garantirti il massimo
+              dello stile.
+            </p>
+          </div>
+          <div class="info-block">
+            <h3>SPEDIZIONI WORLDWIDE 📦</h3>
+            <p>
+              Spediamo in tutta Italia con tracking attivo su ogni tuo ordine.
+            </p>
+          </div>
+          <div class="info-block">
+            <h3>SUPPORT H24 💬</h3>
+            <p>
+              Il nostro team è disponibile su WhatsApp per assistenza ogni
+              giorno.
+            </p>
+          </div>
+        </div>
+        <footer
+          class="main-footer"
+          style="
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #111;
+          "
+        >
+          <p
+            style="
+              color: #444;
+              font-size: 10px;
+              letter-spacing: 1px;
+              font-weight: 700;
+            "
+          >
+            &copy; 2026 STREETWEAR ESSENCE - ALL RIGHTS RESERVED
+          </p>
+        </footer>
+      </section>
     </div>
 
-    <!-- MODAL PRODOTTO -->
     <div id="product-modal" class="modal">
       <span class="close-modal" onclick="closeProduct()">&times;</span>
       <div class="modal-content">
