@@ -10,35 +10,28 @@
       rel="stylesheet"
     />
     <style>
-      /* TASTO ADMIN TONDO IN BASSO A SINISTRA */
-      .admin-floating-btn {
-        position: fixed;
-        bottom: 25px;
-        left: 20px;
-        z-index: 9999;
-        background: #bc13fe;
-        color: white;
-        border: 2px solid white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        font-weight: 900;
-        font-size: 10px;
-        box-shadow: 0 0 20px rgba(188, 19, 254, 0.6);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-transform: uppercase;
+      /* Stile discreto per il link gestionale nel footer */
+      .footer-admin-link {
+        display: inline-block;
+        margin-bottom: 15px;
+        color: #444;
         text-decoration: none;
-        line-height: 1;
-        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 1px solid #222;
+        padding: 5px 12px;
+        border-radius: 4px;
+        transition: 0.3s;
+      }
+      .footer-admin-link:hover {
+        color: #bc13fe;
+        border-color: #bc13fe;
       }
     </style>
   </head>
   <body class="no-scroll">
-    <a href="admin.html" class="admin-floating-btn"> ADMIN<br />LOGIN </a>
-
     <div id="intro">
       <div class="intro-content">
         <div class="img-frame-poster">
@@ -123,7 +116,9 @@
             </p>
           </div>
         </div>
+
         <footer class="main-footer">
+          <a href="admin.html" class="footer-admin-link">Area Gestionale</a>
           <p>&copy; 2026 STREETWEAR ESSENCE - ALL RIGHTS RESERVED</p>
         </footer>
       </section>
@@ -173,10 +168,12 @@
         document.getElementById("product-modal").style.display = "block";
         document.body.style.overflow = "hidden";
       }
+
       function closeProduct() {
         document.getElementById("product-modal").style.display = "none";
         document.body.style.overflow = "auto";
       }
+
       window.onload = function () {
         setTimeout(() => {
           document.getElementById("intro").style.opacity = "0";
