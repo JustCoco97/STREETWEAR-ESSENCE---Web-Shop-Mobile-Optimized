@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streetwear Essence | Categorie</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div
+          class="logo-wrapper"
+          onclick="location.href = 'index.html'"
+          style="cursor: pointer"
+        >
+          <img
+            src="Streetwearprofilo.jpeg"
+            alt="Logo"
+            class="header-logo-img"
+          />
+          <div class="logo">STREETWEAR<span>ESSENCE</span></div>
+        </div>
+        <nav>
+          <a href="index.html" class="filter-btn">HOME</a>
+          <a href="categoria.html?tipo=felpe" class="filter-btn">FELPE</a>
+          <a href="categoria.html?tipo=tute" class="filter-btn">TUTE</a>
+          <a href="categoria.html?tipo=giubbini" class="filter-btn">GIUBBINI</a>
+          <a href="categoria.html?tipo=magliette" class="filter-btn"
+            >MAGLIETTE</a
+          >
+          <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
+          <a href="categoria.html?tipo=cappelli" class="filter-btn">CAPPELLI</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="categories-section">
+      <h2 class="section-title" id="page-title">CARICAMENTO...</h2>
+      <div class="categories-grid" id="cat-grid"></div>
+    </section>
+
+    <div id="product-modal" class="modal">
+      <span class="close-modal" onclick="closeProduct()">&times;</span>
+      <div class="modal-content">
+        <div class="main-img-container"><img id="modal-main-img" src="" /></div>
+        <div class="thumb-container" id="modal-thumbs"></div>
+        <div class="modal-info">
+          <h2 id="modal-product-name"></h2>
+          <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
+            >ORDINA SU WHATSAPP</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        where,
+        limit,
+      } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
+        authDomain: "streetwearessence2026.firebaseapp.com",
+        projectId: "streetwearessence2026",
+        storageBucket: "streetwearessence2026.firebasestorage.app",
+        messagingSenderId: "926228477709",
+        appId: "1:926228477709:web:8a15d11ac26022f1fee244",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      const params = new URLSearchParams(window.location.search);
+      const tipoScelto = params.get("tipo");
+      const grid = document.getElementById("cat-grid");
+      const title = document.getElementById("page-title");
+
+      if (tipoScelto) {
+        title.innerText = tipoScelto.toUpperCase() + " 📦";
+        caricaProdottiFiltrati();
+      }
+
+      async function caricaProdottiFiltrati() {
+        try {
+          // Limite di 20 prodotti per categoria
+          const q = query(
+            collection(db, "prodotti"),
+            where("sezione", "==", tipoScelto),
+            limit(20),
+          );
+          const querySnapshot = await getDocs(q);
+          grid.innerHTML = "";
+
+          if (querySnapshot.empty) {
+            grid.innerHTML =
+              "<p style='color: #666; text-align:center; width:100%; font-weight:bold;'>Nessun prodotto disponibile.</p>";
+            return;
+          }
+
+          querySnapshot.forEach((doc) => {
+            const p = doc.data();
+            const nomePulito = p.nome.replace(/'/g, "\\'");
+            const extraStr = encodeURIComponent(
+              JSON.stringify(p.fotoExtra || []),
+            );
+
+            grid.innerHTML += `
+                <div class="cat-card">
+                  <div class="cat-box" style="background-image:url('${p.fotoPrincipale}'); background-size:cover; background-position:center; aspect-ratio: 1/1;" 
+                       onclick="openProduct('${nomePulito}', '${p.fotoPrincipale}', '${extraStr}')"></div>
+                  <div class="product-name">${p.nome}</div>
+                  <a href="https://wa.me/393273187853?text=Info per ${p.nome}" class="wa-cat-btn" target="_blank"><span>ORDINA ORA</span></a>
+                </div>`;
+          });
+        } catch (e) {
+          console.error(e);
+          grid.innerHTML =
+            "<p style='color:red;'>Errore tecnico nel caricamento.</p>";
+        }
+      }
+
+      window.openProduct = function (name, mainImg, extraJson) {
+        const extra = JSON.parse(decodeURIComponent(extraJson));
+        const modalMainImg = document.getElementById("modal-main-img");
+        const thumbContainer = document.getElementById("modal-thumbs");
+        const waBtn = document.getElementById("modal-wa-btn");
+        document.getElementById("modal-product-name").innerText = name;
+        modalMainImg.src = mainImg;
+        waBtn.href =
+          "https://wa.me/393273187853?text=Ciao, vorrei info su: " + name;
+        thumbContainer.innerHTML = "";
+        const tutteLeFoto = [mainImg, ...extra];
+        tutteLeFoto.forEach((url) => {
+          if (url) {
+            const thumb = document.createElement("img");
+            thumb.src = url;
+            thumb.className = "thumb-img";
+            thumb.onclick = () => (modalMainImg.src = url);
+            thumbContainer.appendChild(thumb);
+          }
+        });
+        document.getElementById("product-modal").style.display = "block";
+        document.body.style.overflow = "hidden";
+      };
+
+      window.closeProduct = function () {
+        document.getElementById("product-modal").style.display = "none";
+        document.body.style.overflow = "auto";
+      };
+    </script>
+  </body>
+</html>

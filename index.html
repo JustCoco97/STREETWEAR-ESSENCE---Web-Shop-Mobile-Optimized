@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Streetwear Essence | Official</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Stili rapidi per Admin - Non toccano il resto del sito */
+      .admin-trigger {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 2000;
+        opacity: 0.3;
+      }
+      .admin-trigger:hover {
+        opacity: 1;
+      }
+      .modal-admin {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 3000;
+        justify-content: center;
+        align-items: center;
+      }
+      .admin-form {
+        background: #111;
+        padding: 20px;
+        border: 2px solid #bc13fe;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 400px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .admin-input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        background: #000;
+        color: white;
+        border: 1px solid #333;
+        border-radius: 8px;
+        font-family: sans-serif;
+      }
+      .admin-btn {
+        width: 100%;
+        padding: 12px;
+        background: #bc13fe;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body class="no-scroll">
+    <div class="admin-trigger">
+      <button
+        id="login-btn"
+        onclick="document.getElementById('login-modal').style.display = 'flex'"
+        style="
+          background: transparent;
+          border: 1px solid #333;
+          color: #333;
+          font-size: 10px;
+          padding: 4px 8px;
+          border-radius: 4px;
+        "
+      >
+        ADMIN
+      </button>
+      <button
+        id="logout-btn"
+        style="
+          display: none;
+          background: #ff4d4d;
+          color: white;
+          border: none;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 10px;
+        "
+      >
+        LOGOUT
+      </button>
+    </div>
+
+    <div id="login-modal" class="modal-admin">
+      <div class="admin-form">
+        <h3 style="color: #bc13fe; text-align: center; margin-bottom: 15px">
+          ACCESSO PROPRIETARIO
+        </h3>
+        <input
+          type="email"
+          id="admin-email"
+          class="admin-input"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          id="admin-password"
+          class="admin-input"
+          placeholder="Password"
+        />
+        <button onclick="loginAdmin()" class="admin-btn">ENTRA</button>
+        <p
+          onclick="
+            document.getElementById('login-modal').style.display = 'none'
+          "
+          style="
+            color: #666;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            cursor: pointer;
+          "
+        >
+          Chiudi
+        </p>
+      </div>
+    </div>
+
+    <div
+      id="admin-panel"
+      style="
+        display: none;
+        background: #000;
+        border: 2px dashed #bc13fe;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 15px;
+      "
+    >
+      <h2 style="color: #bc13fe; margin-bottom: 15px; font-size: 18px">
+        NUOVO ARTICOLO 📦
+      </h2>
+      <input
+        type="text"
+        id="p-nome"
+        class="admin-input"
+        placeholder="Nome Modello"
+      />
+      <input
+        type="text"
+        id="p-img"
+        class="admin-input"
+        placeholder="Link Foto Principale"
+      />
+      <textarea
+        id="p-extra"
+        class="admin-input"
+        placeholder="Link Foto Extra (metti una virgola tra un link e l'altro)"
+        rows="3"
+      ></textarea>
+      <select id="p-sezione" class="admin-input">
+        <option value="vetrina">Vetrina Standard</option>
+        <option value="preferiti">I Nostri Preferiti (Slider Alto)</option>
+        <option value="felpe">Categoria: Felpe</option>
+        <option value="tute">Categoria: Tute</option>
+      </select>
+      <button id="add-btn" class="admin-btn" style="background: #25d366">
+        PUBBLICA SUL SITO 🔥
+      </button>
+    </div>
+
+    <div id="intro">
+      <div class="intro-content">
+        <div class="img-frame-poster">
+          <img
+            src="Streetwearprofilo.jpeg"
+            alt="Profile"
+            class="intro-img-poster"
+          />
+        </div>
+        <h1 class="intro-text">RIFATTI GLI OCCHI 😉</h1>
+        <div class="loader-container"><div class="loader-bar"></div></div>
+      </div>
+    </div>
+
+    <div id="site-content">
+      <header>
+        <div class="header-container">
+          <div
+            class="logo-wrapper"
+            onclick="location.href = 'index.html'"
+            style="cursor: pointer"
+          >
+            <img
+              src="Streetwearprofilo.jpeg"
+              alt="Logo"
+              class="header-logo-img"
+            />
+            <div class="logo">STREETWEAR<span>ESSENCE</span></div>
+          </div>
+          <nav>
+            <a href="categoria.html?tipo=felpe" class="filter-btn">FELPE</a>
+            <a href="categoria.html?tipo=tute" class="filter-btn">TUTE</a>
+            <a href="categoria.html?tipo=giubbini" class="filter-btn"
+              >GIUBBINI</a
+            >
+            <a href="categoria.html?tipo=magliette" class="filter-btn"
+              >MAGLIETTE</a
+            >
+            <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
+            <a href="categoria.html?tipo=cappelli" class="filter-btn"
+              >CAPPELLI</a
+            >
+          </nav>
+        </div>
+      </header>
+
+      <section class="featured-section">
+        <h2 class="section-title">I NOSTRI PREFERITI 🔥</h2>
+        <div class="slider-container">
+          <div class="slider-track" id="slider-track"></div>
+        </div>
+      </section>
+
+      <div class="all-products-banner">
+        <h2 class="all-products-title">TUTTI I NOSTRI PRODOTTI 💎📦</h2>
+      </div>
+
+      <section class="categories-section">
+        <div class="categories-grid" id="categories-grid"></div>
+      </section>
+
+      <section class="info-section">
+        <div class="info-container">
+          <div class="info-block">
+            <h3>QUALITÀ PREMIUM 💎</h3>
+            <p>
+              Selezioniamo solo i migliori materiali per garantirti il massimo
+              dello stile.
+            </p>
+          </div>
+          <div class="info-block">
+            <h3>SPEDIZIONI WORLDWIDE 📦</h3>
+            <p>
+              Spediamo in tutta Italia con tracking attivo su ogni tuo ordine.
+            </p>
+          </div>
+          <div class="info-block">
+            <h3>SUPPORT H24 💬</h3>
+            <p>
+              Il nostro team è disponibile su WhatsApp per assistenza ogni
+              giorno.
+            </p>
+          </div>
+        </div>
+        <footer class="main-footer">
+          <p>&copy; 2026 STREETWEAR ESSENCE - ALL RIGHTS RESERVED</p>
+        </footer>
+      </section>
+    </div>
+
+    <div id="product-modal" class="modal">
+      <span class="close-modal" onclick="closeProduct()">&times;</span>
+      <div class="modal-content">
+        <div class="main-img-container">
+          <img id="modal-main-img" src="" />
+        </div>
+        <div class="thumb-container" id="modal-thumbs"></div>
+        <div class="modal-info">
+          <h2 id="modal-product-name"></h2>
+          <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
+            >SCRIVICI SU WHATSAPP ✅</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="databasestreet.js"></script>
+
+    <script>
+      function openProduct(name, mainImg, extraJson) {
+        const extra = JSON.parse(decodeURIComponent(extraJson));
+        const modalMainImg = document.getElementById("modal-main-img");
+        const thumbContainer = document.getElementById("modal-thumbs");
+        const waBtn = document.getElementById("modal-wa-btn");
+        document.getElementById("modal-product-name").innerText = name;
+        modalMainImg.src = mainImg;
+        waBtn.href =
+          "https://wa.me/393273187853?text=Ciao, vorrei info su: " + name;
+        thumbContainer.innerHTML = "";
+        const tutteLeFoto = [mainImg, ...extra];
+        tutteLeFoto.forEach((url) => {
+          if (url) {
+            const thumb = document.createElement("img");
+            thumb.src = url;
+            thumb.className = "thumb-img";
+            thumb.onclick = function () {
+              modalMainImg.src = url;
+            };
+            thumbContainer.appendChild(thumb);
+          }
+        });
+        document.getElementById("product-modal").style.display = "block";
+        document.body.style.overflow = "hidden";
+      }
+      function closeProduct() {
+        document.getElementById("product-modal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+      window.onload = function () {
+        setTimeout(() => {
+          document.getElementById("intro").style.opacity = "0";
+          document.getElementById("site-content").style.visibility = "visible";
+          document.getElementById("site-content").style.opacity = "1";
+          setTimeout(() => {
+            document.getElementById("intro").style.display = "none";
+            document.body.classList.remove("no-scroll");
+          }, 600);
+        }, 4000);
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,402 @@
+/* =========================================
+   1. RESET E BASE
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+/* INTRO ANIMAZIONE */
+#intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+.intro-content {
+  text-align: center;
+  width: 100%;
+}
+.img-frame-poster {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  border: 3px solid #bc13fe;
+  overflow: hidden;
+}
+.intro-img-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.intro-text {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 25px;
+}
+.loader-container {
+  width: 180px;
+  height: 4px;
+  background: #222;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.loader-bar {
+  width: 0;
+  height: 100%;
+  background: #bc13fe;
+  animation: load 3.5s forwards;
+}
+@keyframes load {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   2. HEADER E NAV
+   ========================================= */
+header {
+  background: #000;
+  padding: 15px;
+  border-bottom: 2px solid #bc13fe;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.header-logo-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid #bc13fe;
+}
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.logo span {
+  color: #bc13fe;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  width: 100%;
+  padding: 5px 10px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+nav::-webkit-scrollbar {
+  display: none;
+}
+.filter-btn {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  border: 1px solid #333;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+/* =========================================
+   3. SEZIONI E SLIDER (I NOSTRI PREFERITI)
+   ========================================= */
+.section-title {
+  padding: 25px 15px 15px;
+  font-size: 22px;
+  color: #25d366;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.all-products-banner {
+  background: #bc13fe;
+  color: #fff;
+  padding: 14px;
+  text-align: center;
+  margin: 20px 0 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.slider-container {
+  width: 100%;
+  overflow-x: auto !important;
+  padding: 10px 15px 20px;
+  display: block;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.slider-container::-webkit-scrollbar {
+  display: none;
+}
+.slider-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 15px;
+}
+
+/* CARD SLIDER */
+.slider-track .cat-card {
+  flex: 0 0 160px !important;
+  min-width: 160px !important;
+  max-width: 160px;
+  background: #0a0a0a;
+  border-radius: 12px;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+   4. GRIGLIA PRODOTTI (TUTTI I PRODOTTI)
+   ========================================= */
+.categories-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  padding: 12px !important;
+}
+.cat-card {
+  background: #0a0a0a;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  flex-direction: column;
+}
+.cat-box {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+.product-name {
+  padding: 12px 8px;
+  font-size: 11px;
+  text-align: center;
+  font-weight: 800;
+  text-transform: uppercase;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wa-cat-btn {
+  display: block;
+  background: #25d366;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   5. MODALE PRODOTTO (FIX SALTO SCHERMO)
+   ========================================= */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  overflow-y: auto;
+}
+.modal-content {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FIX: Altezza fissa per l'immagine principale */
+.main-img-container {
+  width: 100%;
+  height: 380px; /* Mantiene lo spazio fisso per non far ballare lo schermo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+#modal-main-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.thumb-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  justify-content: center;
+}
+.thumb-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.thumb-img:active {
+  border-color: #bc13fe;
+}
+
+.modal-info {
+  text-align: center;
+  padding: 10px 0;
+}
+#modal-product-name {
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.wa-order-btn {
+  display: inline-block;
+  background: #25d366;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 900;
+}
+.close-modal {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* =========================================
+   6. INFO E FOOTER (PULIZIA)
+   ========================================= */
+.info-section {
+  background: #050505;
+  padding: 60px 20px;
+  text-align: center;
+  border-top: 1px solid #1a1a1a;
+  margin-top: 40px;
+}
+.info-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.info-block {
+  margin-bottom: 40px;
+}
+.info-block h3 {
+  color: #bc13fe;
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.info-block p {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.main-footer {
+  margin-top: 50px;
+  border-top: 1px solid #111;
+  padding-top: 20px;
+}
+.main-footer p {
+  color: #444;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* KILL BLU LINKS & RESIDUI */
+a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+/* =========================================
+   7. PC VERSION (GITHUB READY)
+   ========================================= */
+@media (min-width: 1024px) {
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 50px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  nav {
+    width: auto;
+    overflow: hidden;
+    justify-content: flex-end;
+  }
+  .categories-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 25px !important;
+  }
+  .slider-track .cat-card {
+    flex: 0 0 250px !important;
+    min-width: 250px !important;
+  }
+  .section-title,
+  .all-products-banner {
+    text-align: center;
+  }
+  .main-img-container {
+    height: 500px;
+  } /* Più grande su PC */
+}
