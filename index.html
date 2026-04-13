@@ -4,164 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Streetwear Essence | Official</title>
-    <link rel="stylesheet" href="style.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* RESET E BASE */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+      /* HEADER */
+      header { padding: 20px; border-bottom: 1px solid #111; sticky; top: 0; background: #000; z-index: 1000; }
+      .logo { text-align: center; font-size: 20px; font-weight: 900; letter-spacing: 1px; margin-bottom: 15px; }
+      .logo span { color: #bc13fe; }
+      nav { display: flex; gap: 10px; overflow-x: auto; padding: 10px; justify-content: center; }
+      .filter-btn { background: #111; color: #fff; padding: 8px 15px; border-radius: 5px; font-size: 11px; font-weight: 700; border: 1px solid #222; text-decoration: none; white-space: nowrap; }
+
+      /* GRIGLIA PRODOTTI */
+      .section-title { padding: 30px 20px 10px; font-size: 22px; font-weight: 900; color: #39ff14; }
+      .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
+      .product-card { background: #111; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: 0.3s; }
+      .product-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #1a1a1a; }
+      .product-info { padding: 12px; text-align: center; }
+      .product-name { font-size: 12px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; height: 30px; overflow: hidden; }
+
+      /* BOTTONE WHATSAPP */
+      .wa-order-btn { display: block; background: #25d366; color: #fff; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 10px; font-weight: 900; }
+
+      /* BANNER */
+      .all-products-banner { background: #bc13fe; padding: 20px; text-align: center; margin: 20px 0; font-weight: 900; text-transform: uppercase; }
+
+      /* FOOTER E TASTO GESTIONALE */
+      .info-section { background: #080808; padding: 40px 20px; text-align: center; border-top: 1px solid #111; }
+      .footer-admin-wrap { margin-bottom: 30px; }
+      .footer-admin-link {
+          display: inline-block;
+          color: #fff;
+          text-decoration: none;
+          border: 2px solid #bc13fe;
+          padding: 12px 25px;
+          border-radius: 8px;
+          font-weight: 900;
+          font-size: 13px;
+          background: rgba(188, 19, 254, 0.1);
+      }
+      footer p { color: #444; font-size: 10px; margin-top: 20px; }
+
+      /* MODALE */
+      .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; padding: 20px; }
+      .modal-content { max-width: 500px; margin: auto; text-align: center; }
+      #modal-main-img { width: 100%; border-radius: 15px; }
+    </style>
   </head>
-  <body class="no-scroll">
-    <div id="intro">
-      <div class="intro-content">
-        <div class="img-frame-poster">
-          <img
-            src="Streetwearprofilo.jpeg"
-            alt="Profile"
-            class="intro-img-poster"
-          />
-        </div>
-        <h1 class="intro-text">RIFATTI GLI OCCHI 😉</h1>
-        <div class="loader-container"><div class="loader-bar"></div></div>
+  <body>
+    <header>
+      <div class="logo">STREETWEAR<span>ESSENCE</span></div>
+      <nav>
+        <a href="categoria.html?tipo=felpe" class="filter-btn">FELPE</a>
+        <a href="categoria.html?tipo=tute" class="filter-btn">TUTE</a>
+        <a href="categoria.html?tipo=giubbini" class="filter-btn">GIUBBINI</a>
+        <a href="categoria.html?tipo=magliette" class="filter-btn">MAGLIETTE</a>
+        <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
+      </nav>
+    </header>
+
+    <h2 class="section-title">I NOSTRI PREFERITI 🔥</h2>
+    <div class="categories-grid" id="slider-track"></div>
+
+    <div class="all-products-banner">TUTTI I NOSTRI PRODOTTI 💎📦</div>
+
+    <div class="categories-grid" id="categories-grid"></div>
+
+    <section class="info-section">
+      <div class="footer-admin-wrap">
+        <a href="admin.html" class="footer-admin-link">AREA GESTIONALE</a>
       </div>
-    </div>
-
-    <div id="site-content">
-      <header>
-        <div class="header-container">
-          <div
-            class="logo-wrapper"
-            onclick="location.href = 'index.html'"
-            style="cursor: pointer"
-          >
-            <img
-              src="Streetwearprofilo.jpeg"
-              alt="Logo"
-              class="header-logo-img"
-            />
-            <div class="logo">STREETWEAR<span>ESSENCE</span></div>
-          </div>
-          <nav>
-            <a href="categoria.html?tipo=felpe" class="filter-btn">FELPE</a>
-            <a href="categoria.html?tipo=tute" class="filter-btn">TUTE</a>
-            <a href="categoria.html?tipo=giubbini" class="filter-btn"
-              >GIUBBINI</a
-            >
-            <a href="categoria.html?tipo=magliette" class="filter-btn"
-              >MAGLIETTE</a
-            >
-            <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
-            <a href="categoria.html?tipo=cappelli" class="filter-btn"
-              >CAPPELLI</a
-            >
-          </nav>
-        </div>
-      </header>
-
-      <section class="featured-section">
-        <h2 class="section-title">I NOSTRI PREFERITI 🔥</h2>
-        <div class="slider-container">
-          <div class="slider-track" id="slider-track"></div>
-        </div>
-      </section>
-
-      <div class="all-products-banner">
-        <h2 class="all-products-title">TUTTI I NOSTRI PRODOTTI 💎📦</h2>
-      </div>
-
-      <section class="categories-section">
-        <div class="categories-grid" id="categories-grid"></div>
-      </section>
-
-      <section class="info-section">
-        <div class="info-container">
-          <div class="info-block">
-            <h3>QUALITÀ PREMIUM 💎</h3>
-            <p>
-              Selezioniamo solo i migliori materiali per garantirti il massimo
-              dello stile.
-            </p>
-          </div>
-          <div class="info-block">
-            <h3>SPEDIZIONI WORLDWIDE 📦</h3>
-            <p>
-              Spediamo in tutta Italia con tracking attivo su ogni tuo ordine.
-            </p>
-          </div>
-          <div class="info-block">
-            <h3>SUPPORT H24 💬</h3>
-            <p>
-              Il nostro team è disponibile su WhatsApp per assistenza ogni
-              giorno.
-            </p>
-          </div>
-        </div>
-        <footer class="main-footer">
-          <p>&copy; 2026 STREETWEAR ESSENCE - ALL RIGHTS RESERVED</p>
-        </footer>
-      </section>
-    </div>
-
-    <div id="product-modal" class="modal">
-      <span class="close-modal" onclick="closeProduct()">&times;</span>
-      <div class="modal-content">
-        <div class="main-img-container">
-          <img id="modal-main-img" src="" />
-        </div>
-        <div class="thumb-container" id="modal-thumbs"></div>
-        <div class="modal-info">
-          <h2 id="modal-product-name"></h2>
-          <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
-            >SCRIVICI SU WHATSAPP ✅</a
-          >
-        </div>
-      </div>
-    </div>
+      <footer>
+        <p>&copy; 2026 STREETWEAR ESSENCE - ALL RIGHTS RESERVED</p>
+      </footer>
+    </section>
 
     <script type="module" src="databasestreet.js"></script>
-
-    <script>
-      function openProduct(name, mainImg, extraJson) {
-        const extra = JSON.parse(decodeURIComponent(extraJson));
-        const modalMainImg = document.getElementById("modal-main-img");
-        const thumbContainer = document.getElementById("modal-thumbs");
-        const waBtn = document.getElementById("modal-wa-btn");
-        document.getElementById("modal-product-name").innerText = name;
-        modalMainImg.src = mainImg;
-        waBtn.href =
-          "https://wa.me/393273187853?text=Ciao, vorrei info su: " + name;
-        thumbContainer.innerHTML = "";
-        const tutteLeFoto = [mainImg, ...extra];
-        tutteLeFoto.forEach((url) => {
-          if (url) {
-            const thumb = document.createElement("img");
-            thumb.src = url;
-            thumb.className = "thumb-img";
-            thumb.onclick = function () {
-              modalMainImg.src = url;
-            };
-            thumbContainer.appendChild(thumb);
-          }
-        });
-        document.getElementById("product-modal").style.display = "block";
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeProduct() {
-        document.getElementById("product-modal").style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-
-      window.onload = function () {
-        setTimeout(() => {
-          document.getElementById("intro").style.opacity = "0";
-          document.getElementById("site-content").style.visibility = "visible";
-          document.getElementById("site-content").style.opacity = "1";
-          setTimeout(() => {
-            document.getElementById("intro").style.display = "none";
-            document.body.classList.remove("no-scroll");
-          }, 600);
-        }, 4000);
-      };
-    </script>
   </body>
 </html>
