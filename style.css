@@ -1,56 +1,271 @@
-/* =========================================
-   6. NUOVA SEZIONE: ADMIN & LOGIN (OTTIMIZZATA MOBILE)
-   ========================================= */
-.admin-trigger {
-  position: fixed !important;
-  bottom: 25px !important;
-  left: 20px !important;
-  z-index: 100000 !important; /* Più alto di tutto */
-  display: block !important;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+body.no-scroll {
+  overflow: hidden;
 }
 
-.admin-launcher-btn {
-  background: #bc13fe !important;
-  color: white !important;
-  border: 2px solid white !important;
-  width: 65px !important; /* Dimensione fissa tonda */
-  height: 65px !important; /* Dimensione fissa tonda */
-  border-radius: 50% !important;
-  font-weight: 900 !important;
-  font-size: 10px !important;
-  text-transform: uppercase;
-  box-shadow: 0 0 20px rgba(188, 19, 254, 0.7);
-  cursor: pointer;
-  display: flex !important;
+/* INTRO */
+#intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 9999;
+  display: flex;
   align-items: center;
   justify-content: center;
+}
+.intro-content {
   text-align: center;
-  line-height: 1.1;
-  padding: 0 !important; /* Reset padding per mantenere il cerchio */
+}
+.img-frame-poster {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  border: 2px solid #bc13fe;
+}
+.intro-img-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.intro-text {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.loader-container {
+  width: 150px;
+  height: 3px;
+  background: #222;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.loader-bar {
+  width: 0;
+  height: 100%;
+  background: #bc13fe;
+  animation: load 3.5s forwards;
+}
+@keyframes load {
+  to {
+    width: 100%;
+  }
 }
 
-/* Fix per assicurarci che non sparisca su schermi piccoli */
-@media (max-width: 480px) {
-  .admin-trigger {
-    bottom: 20px !important;
-    left: 15px !important;
-  }
-  .admin-launcher-btn {
-    width: 60px !important;
-    height: 60px !important;
-    font-size: 9px !important;
-  }
+/* HEADER */
+header {
+  padding: 15px 0;
+  border-bottom: 1px solid #111;
+  position: sticky;
+  top: 0;
+  background: #000;
+  z-index: 1000;
+}
+.header-container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+.header-logo-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.logo {
+  font-size: 18px;
+  font-weight: 900;
+}
+.logo span {
+  color: #bc13fe;
+}
+nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 5px;
+  justify-content: flex-start;
+}
+.filter-btn {
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 900;
+  border: 1px solid #222;
+  white-space: nowrap;
 }
 
-.modal-admin {
+/* SEZIONI */
+.section-title {
+  padding: 25px 5%;
+  font-size: 20px;
+  font-weight: 900;
+  color: #39ff14;
+}
+.slider-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 0 5% 30px;
+}
+.slider-track {
+  display: flex;
+  gap: 15px;
+}
+.product-card {
+  min-width: 200px;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #222;
+}
+.product-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.product-info {
+  padding: 12px;
+  text-align: center;
+}
+.product-name {
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.wa-order-btn {
+  display: block;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.all-products-banner {
+  background: #bc13fe;
+  padding: 15px;
+  text-align: center;
+  margin: 20px 0;
+}
+.all-products-title {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.categories-grid {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding-bottom: 40px;
+}
+
+/* INFO */
+.info-section {
+  background: #080808;
+  padding: 40px 5%;
+  border-top: 1px solid #111;
+}
+.info-block {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.info-block h3 {
+  color: #bc13fe;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.info-block p {
+  color: #666;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.main-footer {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #111;
+  color: #333;
+  font-size: 10px;
+}
+
+/* MODAL */
+.modal {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 100001;
-  justify-content: center;
-  align-items: center;
+  background: #000;
+  z-index: 2000;
+  overflow-y: auto;
+}
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 35px;
+  color: #fff;
+  z-index: 2100;
+}
+.modal-content {
+  width: 90%;
+  margin: 50px auto;
+}
+#modal-main-img {
+  width: 100%;
+  border-radius: 10px;
+}
+.thumb-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.thumb-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #222;
+}
+.modal-info {
+  text-align: center;
+  margin-top: 20px;
+}
+#modal-product-name {
+  font-size: 18px;
+  margin-bottom: 20px;
 }
