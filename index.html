@@ -10,113 +10,34 @@
       rel="stylesheet"
     />
     <style>
-      /* TASTO ADMIN VISIBILE IN BASSO */
-      .admin-trigger {
+      /* TASTO ADMIN TONDO IN BASSO A SINISTRA */
+      .admin-floating-btn {
         position: fixed;
-        bottom: 20px;
+        bottom: 25px;
         left: 20px;
         z-index: 9999;
-      }
-      .admin-launcher-btn {
         background: #bc13fe;
         color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 50px;
-        font-weight: bold;
-        font-size: 12px;
-        box-shadow: 0 4px 15px rgba(188, 19, 254, 0.4);
+        border: 2px solid white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-weight: 900;
+        font-size: 10px;
+        box-shadow: 0 0 20px rgba(188, 19, 254, 0.6);
         cursor: pointer;
-        text-transform: uppercase;
-      }
-      .modal-admin {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 10000;
-        justify-content: center;
+        display: flex;
         align-items: center;
-      }
-      .admin-form {
-        background: #111;
-        padding: 25px;
-        border: 2px solid #bc13fe;
-        border-radius: 20px;
-        width: 90%;
-        max-width: 400px;
-      }
-      .admin-input {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 12px;
-        background: #000;
-        color: white;
-        border: 1px solid #333;
-        border-radius: 10px;
-        box-sizing: border-box;
-      }
-      .admin-btn {
-        width: 100%;
-        padding: 14px;
-        background: #bc13fe;
-        color: white;
-        font-weight: bold;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
+        justify-content: center;
+        text-transform: uppercase;
+        text-decoration: none;
+        line-height: 1;
+        text-align: center;
       }
     </style>
   </head>
   <body class="no-scroll">
-    <div class="admin-trigger">
-      <button
-        id="login-btn"
-        class="admin-launcher-btn"
-        onclick="document.getElementById('login-modal').style.display = 'flex'"
-      >
-        ADMIN LOGIN
-      </button>
-    </div>
-
-    <div id="login-modal" class="modal-admin">
-      <div class="admin-form">
-        <h3 style="color: #bc13fe; text-align: center; margin-bottom: 20px">
-          ACCESSO GESTIONALE
-        </h3>
-        <input
-          type="email"
-          id="admin-email"
-          class="admin-input"
-          placeholder="La tua email"
-        />
-        <input
-          type="password"
-          id="admin-password"
-          class="admin-input"
-          placeholder="La tua password"
-        />
-        <button onclick="loginAdmin()" class="admin-btn">
-          ENTRA NEL PANNELLO
-        </button>
-        <p
-          onclick="
-            document.getElementById('login-modal').style.display = 'none'
-          "
-          style="
-            color: #666;
-            text-align: center;
-            margin-top: 15px;
-            cursor: pointer;
-          "
-        >
-          Annulla
-        </p>
-      </div>
-    </div>
+    <a href="admin.html" class="admin-floating-btn"> ADMIN<br />LOGIN </a>
 
     <div id="intro">
       <div class="intro-content">
