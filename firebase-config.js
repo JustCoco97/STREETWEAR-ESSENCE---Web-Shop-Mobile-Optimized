@@ -1,4 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+// firebase-config.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import {
   getFirestore,
   collection,
@@ -7,16 +8,10 @@ import {
   addDoc,
   deleteDoc,
   doc,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBv9ZAOqlydjw41DTuxNacxzqegXEvn94",
+  apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
   authDomain: "streetwearessence2026.firebaseapp.com",
   projectId: "streetwearessence2026",
   storageBucket: "streetwearessence2026.firebasestorage.app",
@@ -26,19 +21,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
-// Esportiamo tutto quello che serve per il database e per l'admin
-export {
-  db,
-  auth,
-  collection,
-  getDocs,
-  onSnapshot,
-  addDoc,
-  deleteDoc,
-  doc,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-};
+export { db, collection, getDocs, onSnapshot, addDoc, deleteDoc, doc };

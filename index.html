@@ -2,16 +2,29 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Streetwear Essence</title>
     <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      /* FIX VELOCE IMMAGINI */
-      img { max-width: 100%; height: auto; display: block; }
-      .slider-track img { width: 250px; height: 350px; object-fit: cover; border-radius: 15px; }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      .slider-track img {
+        width: 250px;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 15px;
+      }
 
-      /* IL TASTO CHE VOLEVI - BASSO SINISTRA */
       .mobile-admin-btn {
         position: fixed;
         bottom: 15px;
@@ -24,27 +37,34 @@
         border-radius: 8px;
         font-weight: bold;
         font-size: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         text-transform: uppercase;
+        cursor: pointer;
       }
 
-      /* LOGIN MODAL */
       .login-overlay {
         display: none;
         position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.9);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.92);
         z-index: 100000;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+      }
+      .login-overlay.aperto {
+        display: flex;
       }
       .login-box {
         background: #111;
         padding: 30px;
         border-radius: 15px;
         border: 1px solid #bc13fe;
-        width: 80%;
+        width: 85%;
+        max-width: 350px;
       }
       .login-box input {
         width: 100%;
@@ -55,44 +75,107 @@
         border: 1px solid #333;
         border-radius: 8px;
         box-sizing: border-box;
+        font-size: 16px;
+      }
+      .login-box button.entra {
+        width: 100%;
+        padding: 15px;
+        background: #bc13fe;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 900;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 5px;
+      }
+      .login-box p.chiudi {
+        color: #555;
+        text-align: center;
+        margin-top: 15px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .login-box p.chiudi:hover {
+        color: #fff;
+      }
+
+      .wa-order-btn {
+        display: block;
+        background: #25d366;
+        color: #fff;
+        text-decoration: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 900;
+        text-align: center;
+        margin-top: 15px;
+      }
+      .modal-info h2 {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+      .all-products-banner {
+        padding: 10px 5%;
+      }
+      .all-products-title {
+        font-size: 20px;
+        font-weight: 900;
+        color: #39ff14;
       }
     </style>
   </head>
   <body class="no-scroll">
+    <!-- BOTTONE ADMIN FISSO IN BASSO A SINISTRA -->
+    <button class="mobile-admin-btn" onclick="apriLogin()">🔐 ADMIN</button>
 
-    <button class="mobile-admin-btn" onclick="document.getElementById('login-box').style.display='flex'">
-      ADMIN
-    </button>
-
+    <!-- LOGIN MODAL -->
     <div id="login-box" class="login-overlay">
       <div class="login-box">
-        <h2 style="color:#bc13fe; margin-top:0;">LOGIN ADMIN</h2>
-        <input type="password" id="pass-field" placeholder="Password">
-        <button onclick="checkAdmin()" style="width:100%; padding:15px; background:#bc13fe; color:white; border:none; border-radius:8px; font-weight:900;">ENTRA</button>
-        <p onclick="document.getElementById('login-box').style.display='none'" style="color:#555; text-align:center; margin-top:15px;">Chiudi</p>
+        <h2 style="color: #bc13fe; margin-top: 0; font-size: 18px">
+          LOGIN ADMIN
+        </h2>
+        <input type="password" id="pass-field" placeholder="Password" />
+        <button class="entra" onclick="checkAdmin()">ENTRA</button>
+        <p class="chiudi" onclick="chiudiLogin()">Chiudi</p>
       </div>
     </div>
 
+    <!-- INTRO ANIMATA -->
     <div id="intro">
       <div class="intro-content">
-        <div class="img-frame-poster"><img src="Streetwearprofilo.jpeg" class="intro-img-poster" /></div>
+        <div class="img-frame-poster">
+          <img src="Streetwearprofilo.jpeg" class="intro-img-poster" />
+        </div>
         <h1 class="intro-text">RIFATTI GLI OCCHI 😉</h1>
         <div class="loader-container"><div class="loader-bar"></div></div>
       </div>
     </div>
 
-    <div id="site-content">
+    <!-- CONTENUTO PRINCIPALE -->
+    <div id="site-content" style="opacity: 0; transition: opacity 0.5s">
       <header>
         <div class="header-container">
-          <div class="logo-wrapper" onclick="location.href='index.html'">
+          <div
+            class="logo-wrapper"
+            onclick="location.href = 'index.html'"
+            style="cursor: pointer"
+          >
             <img src="Streetwearprofilo.jpeg" class="header-logo-img" />
             <div class="logo">STREETWEAR<span>ESSENCE</span></div>
           </div>
           <nav>
             <a href="categoria.html?tipo=felpe" class="filter-btn">FELPE</a>
             <a href="categoria.html?tipo=tute" class="filter-btn">TUTE</a>
-            <a href="categoria.html?tipo=giubbini" class="filter-btn">GIUBBINI</a>
-            <a href="categoria.html?tipo=magliette" class="filter-btn">MAGLIETTE</a>
+            <a href="categoria.html?tipo=giubbini" class="filter-btn"
+              >GIUBBINI</a
+            >
+            <a href="categoria.html?tipo=magliette" class="filter-btn"
+              >MAGLIETTE</a
+            >
             <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
           </nav>
         </div>
@@ -100,7 +183,9 @@
 
       <section class="featured-section">
         <h2 class="section-title">I NOSTRI PREFERITI 🔥</h2>
-        <div class="slider-container"><div class="slider-track" id="slider-track"></div></div>
+        <div class="slider-container">
+          <div class="slider-track" id="slider-track"></div>
+        </div>
       </section>
 
       <div class="all-products-banner">
@@ -111,48 +196,74 @@
         <div class="categories-grid" id="categories-grid"></div>
       </section>
 
-      <footer class="main-footer">
+      <footer class="main-footer" style="text-align: center">
         <p>&copy; 2026 STREETWEAR ESSENCE</p>
       </footer>
     </div>
 
+    <!-- MODAL PRODOTTO -->
     <div id="product-modal" class="modal">
       <span class="close-modal" onclick="closeProduct()">&times;</span>
       <div class="modal-content">
-        <div class="main-img-container"><img id="modal-main-img" src="" /></div>
+        <div class="main-img-container">
+          <img
+            id="modal-main-img"
+            src=""
+            style="width: 100%; border-radius: 10px"
+          />
+        </div>
         <div id="modal-thumbs" class="thumb-container"></div>
         <div class="modal-info">
           <h2 id="modal-product-name"></h2>
-          <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank">WHATSAPP ✅</a>
+          <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
+            >WHATSAPP ✅</a
+          >
         </div>
       </div>
     </div>
 
     <script type="module" src="databasestreet.js"></script>
     <script>
+      function apriLogin() {
+        document.getElementById("login-box").classList.add("aperto");
+        document.getElementById("pass-field").value = "";
+      }
+      function chiudiLogin() {
+        document.getElementById("login-box").classList.remove("aperto");
+      }
       function checkAdmin() {
-        if(document.getElementById('pass-field').value === "essence2026") {
+        if (document.getElementById("pass-field").value === "essence2026") {
           window.location.href = "admin.html";
-        } else { alert("Sbagliata!"); }
+        } else {
+          alert("Password sbagliata!");
+        }
       }
       function openProduct(name, mainImg, extraJson) {
         const extra = JSON.parse(decodeURIComponent(extraJson));
         document.getElementById("modal-product-name").innerText = name;
         document.getElementById("modal-main-img").src = mainImg;
-        document.getElementById("modal-wa-btn").href = "https://wa.me/393273187853?text=Info: " + name;
+        document.getElementById("modal-wa-btn").href =
+          "https://wa.me/393273187853?text=Ciao, vorrei info su: " + name;
         const thumbContainer = document.getElementById("modal-thumbs");
         thumbContainer.innerHTML = "";
-        [mainImg, ...extra].forEach(url => {
-          if(url) {
+        [mainImg, ...extra].forEach((url) => {
+          if (url) {
             const img = document.createElement("img");
-            img.src = url; img.className = "thumb-img";
-            img.onclick = () => { document.getElementById("modal-main-img").src = url; };
+            img.src = url;
+            img.className = "thumb-img";
+            img.onclick = () => {
+              document.getElementById("modal-main-img").src = url;
+            };
             thumbContainer.appendChild(img);
           }
         });
         document.getElementById("product-modal").style.display = "block";
+        document.body.style.overflow = "hidden";
       }
-      function closeProduct() { document.getElementById("product-modal").style.display = "none"; }
+      function closeProduct() {
+        document.getElementById("product-modal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
       window.onload = () => {
         setTimeout(() => {
           document.getElementById("intro").style.display = "none";
