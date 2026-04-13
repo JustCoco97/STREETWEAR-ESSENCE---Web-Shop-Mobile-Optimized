@@ -138,22 +138,25 @@ nav {
   display: flex;
   gap: 15px;
 }
+
+/* GRIGLIA PRODOTTI - FIX MOBILE */
 .categories-grid {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   padding-bottom: 40px;
+  overflow: hidden;
 }
 
-/* LE CLASSI DEL DATABASE (Fixate) */
+/* LE CLASSI DEL DATABASE */
 .cat-card {
   background: #111;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #222;
-  min-width: 200px;
+  min-width: 0;
 }
 .cat-box {
   width: 100%;
@@ -169,6 +172,8 @@ nav {
   margin: 10px 0;
   text-align: center;
   color: #fff;
+  padding: 0 5px;
+  word-break: break-word;
 }
 .wa-cat-btn {
   display: block;
@@ -180,7 +185,7 @@ nav {
   font-size: 11px;
   font-weight: 900;
   text-align: center;
-  margin: 0 10px 10px;
+  margin: 0 8px 10px;
 }
 
 /* FOOTER E TASTO GESTIONALE */
