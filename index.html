@@ -42,64 +42,6 @@
         cursor: pointer;
       }
 
-      .login-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.92);
-        z-index: 100000;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .login-overlay.aperto {
-        display: flex;
-      }
-      .login-box {
-        background: #111;
-        padding: 30px;
-        border-radius: 15px;
-        border: 1px solid #bc13fe;
-        width: 85%;
-        max-width: 350px;
-      }
-      .login-box input {
-        width: 100%;
-        padding: 15px;
-        margin: 10px 0;
-        background: #000;
-        color: #fff;
-        border: 1px solid #333;
-        border-radius: 8px;
-        box-sizing: border-box;
-        font-size: 16px;
-      }
-      .login-box button.entra {
-        width: 100%;
-        padding: 15px;
-        background: #bc13fe;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 900;
-        font-size: 15px;
-        cursor: pointer;
-        margin-top: 5px;
-      }
-      .login-box p.chiudi {
-        color: #555;
-        text-align: center;
-        margin-top: 15px;
-        cursor: pointer;
-        font-size: 13px;
-      }
-      .login-box p.chiudi:hover {
-        color: #fff;
-      }
-
       .wa-order-btn {
         display: block;
         background: #25d366;
@@ -130,19 +72,12 @@
   </head>
   <body class="no-scroll">
     <!-- BOTTONE ADMIN FISSO IN BASSO A SINISTRA -->
-    <button class="mobile-admin-btn" onclick="apriLogin()">🔐 ADMIN</button>
-
-    <!-- LOGIN MODAL -->
-    <div id="login-box" class="login-overlay">
-      <div class="login-box">
-        <h2 style="color: #bc13fe; margin-top: 0; font-size: 18px">
-          LOGIN ADMIN
-        </h2>
-        <input type="password" id="pass-field" placeholder="Password" />
-        <button class="entra" onclick="checkAdmin()">ENTRA</button>
-        <p class="chiudi" onclick="chiudiLogin()">Chiudi</p>
-      </div>
-    </div>
+    <button
+      class="mobile-admin-btn"
+      onclick="window.location.href = 'admin.html'"
+    >
+      🔐 ADMIN
+    </button>
 
     <!-- INTRO ANIMATA -->
     <div id="intro">
@@ -224,20 +159,6 @@
 
     <script type="module" src="databasestreet.js"></script>
     <script>
-      function apriLogin() {
-        document.getElementById("login-box").classList.add("aperto");
-        document.getElementById("pass-field").value = "";
-      }
-      function chiudiLogin() {
-        document.getElementById("login-box").classList.remove("aperto");
-      }
-      function checkAdmin() {
-        if (document.getElementById("pass-field").value === "essence2026") {
-          window.location.href = "admin.html";
-        } else {
-          alert("Password sbagliata!");
-        }
-      }
       function openProduct(name, mainImg, extraJson) {
         const extra = JSON.parse(decodeURIComponent(extraJson));
         document.getElementById("modal-product-name").innerText = name;
