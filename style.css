@@ -172,7 +172,6 @@ nav::-webkit-scrollbar {
   gap: 15px;
 }
 
-/* CARD SLIDER */
 .slider-track .cat-card {
   flex: 0 0 160px !important;
   min-width: 160px !important;
@@ -232,7 +231,7 @@ nav::-webkit-scrollbar {
 }
 
 /* =========================================
-   5. MODALE PRODOTTO (FIX SALTO SCHERMO)
+   5. MODALE PRODOTTO
    ========================================= */
 .modal {
   display: none;
@@ -252,11 +251,9 @@ nav::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
 }
-
-/* FIX: Altezza fissa per l'immagine principale */
 .main-img-container {
   width: 100%;
-  height: 380px; /* Mantiene lo spazio fisso per non far ballare lo schermo */
+  height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,7 +267,6 @@ nav::-webkit-scrollbar {
   max-height: 100%;
   object-fit: contain;
 }
-
 .thumb-container {
   display: flex;
   gap: 10px;
@@ -290,7 +286,6 @@ nav::-webkit-scrollbar {
 .thumb-img:active {
   border-color: #bc13fe;
 }
-
 .modal-info {
   text-align: center;
   padding: 10px 0;
@@ -321,7 +316,69 @@ nav::-webkit-scrollbar {
 }
 
 /* =========================================
-   6. INFO E FOOTER (PULIZIA)
+   6. NUOVA SEZIONE: ADMIN & LOGIN (INTEGRATA)
+   ========================================= */
+.admin-trigger {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+}
+.admin-launcher-btn {
+  background: #bc13fe;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 900;
+  font-size: 11px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(188, 19, 254, 0.4);
+  cursor: pointer;
+}
+.modal-admin {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+.admin-form {
+  background: #111;
+  padding: 25px;
+  border: 2px solid #bc13fe;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 380px;
+}
+.admin-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #000;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 10px;
+}
+.admin-btn {
+  width: 100%;
+  padding: 14px;
+  background: #bc13fe;
+  color: white;
+  font-weight: 900;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* =========================================
+   7. INFO E FOOTER
    ========================================= */
 .info-section {
   background: #050505;
@@ -360,14 +417,13 @@ nav::-webkit-scrollbar {
   letter-spacing: 1px;
 }
 
-/* KILL BLU LINKS & RESIDUI */
 a {
   text-decoration: none !important;
   color: inherit !important;
 }
 
 /* =========================================
-   7. PC VERSION (GITHUB READY)
+   8. PC VERSION
    ========================================= */
 @media (min-width: 1024px) {
   .header-container {
@@ -398,5 +454,5 @@ a {
   }
   .main-img-container {
     height: 500px;
-  } /* Più grande su PC */
+  }
 }
