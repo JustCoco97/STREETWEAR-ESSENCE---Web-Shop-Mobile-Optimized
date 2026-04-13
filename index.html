@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
     <style>
-      /* NUOVO STILE TASTO ADMIN VISIBILE */
+      /* TASTO ADMIN VISIBILE IN BASSO */
       .admin-trigger {
         position: fixed;
         bottom: 20px;
@@ -21,7 +21,7 @@
         background: #bc13fe;
         color: white;
         border: none;
-        padding: 10px 18px;
+        padding: 12px 20px;
         border-radius: 50px;
         font-weight: bold;
         font-size: 12px;
@@ -69,13 +69,6 @@
         border-radius: 10px;
         cursor: pointer;
       }
-      #admin-panel {
-        background: #111;
-        border: 2px dashed #bc13fe;
-        margin: 20px;
-        padding: 20px;
-        border-radius: 15px;
-      }
     </style>
   </head>
   <body class="no-scroll">
@@ -86,13 +79,6 @@
         onclick="document.getElementById('login-modal').style.display = 'flex'"
       >
         ADMIN LOGIN
-      </button>
-      <button
-        id="logout-btn"
-        class="admin-launcher-btn"
-        style="display: none; background: #ff4d4d"
-      >
-        LOGOUT
       </button>
     </div>
 
@@ -113,7 +99,9 @@
           class="admin-input"
           placeholder="La tua password"
         />
-        <button onclick="loginAdmin()" class="admin-btn">ACCEDI ORA</button>
+        <button onclick="loginAdmin()" class="admin-btn">
+          ENTRA NEL PANNELLO
+        </button>
         <p
           onclick="
             document.getElementById('login-modal').style.display = 'none'
@@ -128,43 +116,6 @@
           Annulla
         </p>
       </div>
-    </div>
-
-    <div id="admin-panel" style="display: none">
-      <h2 style="color: #bc13fe; margin-bottom: 15px; font-size: 18px">
-        NUOVO ARTICOLO 📦
-      </h2>
-      <input
-        type="text"
-        id="p-nome"
-        class="admin-input"
-        placeholder="Nome Modello"
-      />
-      <input
-        type="text"
-        id="p-img"
-        class="admin-input"
-        placeholder="Link Foto Principale"
-      />
-      <textarea
-        id="p-extra"
-        class="admin-input"
-        placeholder="Link Foto Extra (separa con virgola)"
-        rows="2"
-      ></textarea>
-      <select id="p-sezione" class="admin-input">
-        <option value="vetrina">Vetrina Standard</option>
-        <option value="preferiti">I Nostri Preferiti (Slider Alto)</option>
-        <option value="felpe">Categoria: Felpe</option>
-        <option value="tute">Categoria: Tute</option>
-        <option value="giubbini">Categoria: Giubbini</option>
-        <option value="magliette">Categoria: Magliette</option>
-        <option value="scarpe">Categoria: Scarpe</option>
-        <option value="cappelli">Categoria: Cappelli</option>
-      </select>
-      <button id="add-btn" class="admin-btn" style="background: #25d366">
-        PUBBLICA SUL SITO 🔥
-      </button>
     </div>
 
     <div id="intro">
