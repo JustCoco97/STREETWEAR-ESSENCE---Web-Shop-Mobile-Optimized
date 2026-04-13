@@ -1,12 +1,34 @@
-// databasestreet.js
-import { db, collection, onSnapshot } from "./firebase-config.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
+  authDomain: "streetwearessence2026.firebaseapp.com",
+  projectId: "streetwearessence2026",
+  storageBucket: "streetwearessence2026.firebasestorage.app",
+  messagingSenderId: "926228477709",
+  appId: "1:926228477709:web:8a15d11ac26022f1fee244",
+};
+
+// Inizializza Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const sliderTrack = document.getElementById("slider-track");
 const categoriesGrid = document.getElementById("categories-grid");
 
-onSnapshot(collection(db, "prodotti"), (snapshot) => {
-  sliderTrack.innerHTML = "";
-  categoriesGrid.innerHTML = "";
+// Recupera i prodotti ordinati per data (i più nuovi prima)
+const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
+
+onSnapshot(q, (snapshot) => {
+  if (sliderTrack) sliderTrack.innerHTML = "";
+  if (categoriesGrid) categoriesGrid.innerHTML = "";
 
   snapshot.forEach((docSnap) => {
     const p = docSnap.data();
@@ -30,9 +52,9 @@ onSnapshot(collection(db, "prodotti"), (snapshot) => {
     `;
 
     if (cat === "preferiti") {
-      sliderTrack.innerHTML += card;
+      if (sliderTrack) sliderTrack.innerHTML += card;
     } else {
-      categoriesGrid.innerHTML += card;
+      if (categoriesGrid) categoriesGrid.innerHTML += card;
     }
   });
 });
