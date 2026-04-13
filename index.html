@@ -9,51 +9,212 @@
       rel="stylesheet"
     />
     <style>
-      /* RESET E BASE */
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-
-      /* HEADER */
-      header { padding: 20px; border-bottom: 1px solid #111; sticky; top: 0; background: #000; z-index: 1000; }
-      .logo { text-align: center; font-size: 20px; font-weight: 900; letter-spacing: 1px; margin-bottom: 15px; }
-      .logo span { color: #bc13fe; }
-      nav { display: flex; gap: 10px; overflow-x: auto; padding: 10px; justify-content: center; }
-      .filter-btn { background: #111; color: #fff; padding: 8px 15px; border-radius: 5px; font-size: 11px; font-weight: 700; border: 1px solid #222; text-decoration: none; white-space: nowrap; }
-
-      /* GRIGLIA PRODOTTI */
-      .section-title { padding: 30px 20px 10px; font-size: 22px; font-weight: 900; color: #39ff14; }
-      .categories-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
-      .product-card { background: #111; border-radius: 12px; overflow: hidden; border: 1px solid #222; transition: 0.3s; }
-      .product-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #1a1a1a; }
-      .product-info { padding: 12px; text-align: center; }
-      .product-name { font-size: 12px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; height: 30px; overflow: hidden; }
-
-      /* BOTTONE WHATSAPP */
-      .wa-order-btn { display: block; background: #25d366; color: #fff; text-decoration: none; padding: 10px; border-radius: 8px; font-size: 10px; font-weight: 900; }
-
-      /* BANNER */
-      .all-products-banner { background: #bc13fe; padding: 20px; text-align: center; margin: 20px 0; font-weight: 900; text-transform: uppercase; }
-
-      /* FOOTER E TASTO GESTIONALE */
-      .info-section { background: #080808; padding: 40px 20px; text-align: center; border-top: 1px solid #111; }
-      .footer-admin-wrap { margin-bottom: 30px; }
-      .footer-admin-link {
-          display: inline-block;
-          color: #fff;
-          text-decoration: none;
-          border: 2px solid #bc13fe;
-          padding: 12px 25px;
-          border-radius: 8px;
-          font-weight: 900;
-          font-size: 13px;
-          background: rgba(188, 19, 254, 0.1);
+      /* --- RESET E BASE --- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      footer p { color: #444; font-size: 10px; margin-top: 20px; }
+      body {
+        background-color: #000;
+        color: #fff;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
 
-      /* MODALE */
-      .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 2000; padding: 20px; }
-      .modal-content { max-width: 500px; margin: auto; text-align: center; }
-      #modal-main-img { width: 100%; border-radius: 15px; }
+      /* --- HEADER --- */
+      header {
+        padding: 20px;
+        border-bottom: 1px solid #111;
+        position: sticky;
+        top: 0;
+        background: #000;
+        z-index: 1000;
+      }
+      .logo {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+      }
+      .logo span {
+        color: #bc13fe;
+      }
+      nav {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 5px;
+        justify-content: flex-start;
+      }
+      .filter-btn {
+        background: #111;
+        color: #fff;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 11px;
+        font-weight: 700;
+        border: 1px solid #222;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      /* --- GRIGLIA PRODOTTI (Sincronizzata con databasestreet.js) --- */
+      .section-title {
+        padding: 30px 20px 10px;
+        font-size: 22px;
+        font-weight: 900;
+        color: #39ff14;
+      }
+
+      /* Slider per i Preferiti */
+      .slider-container {
+        width: 100%;
+        overflow-x: auto;
+        padding: 10px 20px 30px;
+      }
+      #slider-track {
+        display: flex;
+        gap: 15px;
+      }
+
+      /* Griglia per Tutti i prodotti */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 20px;
+      }
+
+      /* Card Prodotto */
+      .cat-card {
+        background: #111;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #222;
+        width: 100%;
+        min-width: 160px;
+      }
+      .cat-box {
+        width: 100%;
+        aspect-ratio: 1/1;
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        background-color: #1a1a1a;
+      }
+      .product-name {
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+        padding: 12px 10px 5px;
+        text-align: center;
+        color: #fff;
+        height: 35px;
+        overflow: hidden;
+      }
+
+      /* Bottone WhatsApp */
+      .wa-cat-btn {
+        display: block;
+        background: #25d366;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: 900;
+        text-align: center;
+        margin: 10px;
+      }
+
+      /* --- BANNER --- */
+      .all-products-banner {
+        background: #bc13fe;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* --- INFO E FOOTER --- */
+      .info-section {
+        background: #080808;
+        padding: 40px 20px;
+        text-align: center;
+        border-top: 1px solid #111;
+      }
+      .footer-admin-wrap {
+        margin-bottom: 30px;
+      }
+      .footer-admin-link {
+        display: inline-block;
+        color: #fff;
+        text-decoration: none;
+        border: 2px solid #bc13fe;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 900;
+        font-size: 13px;
+        background: rgba(188, 19, 254, 0.1);
+        text-transform: uppercase;
+      }
+      footer p {
+        color: #444;
+        font-size: 10px;
+        margin-top: 20px;
+      }
+
+      /* --- MODALE --- */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 2000;
+        padding: 20px;
+        overflow-y: auto;
+      }
+      .modal-content {
+        max-width: 500px;
+        margin: 40px auto;
+        text-align: center;
+      }
+      #modal-main-img {
+        width: 100%;
+        border-radius: 15px;
+        border: 1px solid #333;
+      }
+      .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 35px;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .thumb-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+      .thumb-img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #222;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -65,11 +226,14 @@
         <a href="categoria.html?tipo=giubbini" class="filter-btn">GIUBBINI</a>
         <a href="categoria.html?tipo=magliette" class="filter-btn">MAGLIETTE</a>
         <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
+        <a href="categoria.html?tipo=cappelli" class="filter-btn">CAPPELLI</a>
       </nav>
     </header>
 
     <h2 class="section-title">I NOSTRI PREFERITI 🔥</h2>
-    <div class="categories-grid" id="slider-track"></div>
+    <div class="slider-container">
+      <div id="slider-track"></div>
+    </div>
 
     <div class="all-products-banner">TUTTI I NOSTRI PRODOTTI 💎📦</div>
 
@@ -84,6 +248,64 @@
       </footer>
     </section>
 
+    <div id="product-modal" class="modal">
+      <span class="close-modal" onclick="closeProduct()">&times;</span>
+      <div class="modal-content">
+        <img id="modal-main-img" src="" />
+        <div class="thumb-container" id="modal-thumbs"></div>
+        <div class="modal-info" style="margin-top: 20px">
+          <h2
+            id="modal-product-name"
+            style="text-transform: uppercase; margin-bottom: 15px"
+          ></h2>
+          <a
+            href="#"
+            id="modal-wa-btn"
+            class="wa-cat-btn"
+            target="_blank"
+            style="font-size: 14px; padding: 15px"
+            >SCRIVICI SU WHATSAPP ✅</a
+          >
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="databasestreet.js"></script>
+
+    <script>
+      // Funzioni per la modale (devono essere globali)
+      window.openProduct = function (name, mainImg, extraJson) {
+        const extra = JSON.parse(decodeURIComponent(extraJson));
+        const modal = document.getElementById("product-modal");
+        const modalImg = document.getElementById("modal-main-img");
+        const modalName = document.getElementById("modal-product-name");
+        const modalWa = document.getElementById("modal-wa-btn");
+        const thumbContainer = document.getElementById("modal-thumbs");
+
+        modalName.innerText = name;
+        modalImg.src = mainImg;
+        modalWa.href = `https://wa.me/393273187853?text=Ciao, vorrei info su: ${name}`;
+
+        thumbContainer.innerHTML = "";
+        const allPhotos = [mainImg, ...extra];
+        allPhotos.forEach((url) => {
+          if (url) {
+            const img = document.createElement("img");
+            img.src = url;
+            img.className = "thumb-img";
+            img.onclick = () => (modalImg.src = url);
+            thumbContainer.appendChild(img);
+          }
+        });
+
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+      };
+
+      window.closeProduct = function () {
+        document.getElementById("product-modal").style.display = "none";
+        document.body.style.overflow = "auto";
+      };
+    </script>
   </body>
 </html>

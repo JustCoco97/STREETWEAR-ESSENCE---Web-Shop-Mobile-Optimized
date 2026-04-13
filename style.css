@@ -122,7 +122,7 @@ nav {
   white-space: nowrap;
 }
 
-/* SEZIONI */
+/* SEZIONI E GRID */
 .section-title {
   padding: 25px 5%;
   font-size: 20px;
@@ -138,50 +138,6 @@ nav {
   display: flex;
   gap: 15px;
 }
-.product-card {
-  min-width: 200px;
-  background: #111;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #222;
-}
-.product-img {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-}
-.product-info {
-  padding: 12px;
-  text-align: center;
-}
-.product-name {
-  font-size: 13px;
-  font-weight: 900;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-.wa-order-btn {
-  display: block;
-  background: #25d366;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 11px;
-  font-weight: 900;
-}
-
-.all-products-banner {
-  background: #bc13fe;
-  padding: 15px;
-  text-align: center;
-  margin: 20px 0;
-}
-.all-products-title {
-  font-size: 16px;
-  font-weight: 900;
-}
-
 .categories-grid {
   width: 90%;
   margin: 0 auto;
@@ -191,28 +147,65 @@ nav {
   padding-bottom: 40px;
 }
 
-/* INFO */
+/* LE CLASSI DEL DATABASE (Fixate) */
+.cat-card {
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #222;
+  min-width: 200px;
+}
+.cat-box {
+  width: 100%;
+  aspect-ratio: 1;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+.product-name {
+  font-size: 13px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 10px 0;
+  text-align: center;
+  color: #fff;
+}
+.wa-cat-btn {
+  display: block;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  text-align: center;
+  margin: 0 10px 10px;
+}
+
+/* FOOTER E TASTO GESTIONALE */
 .info-section {
   background: #080808;
   padding: 40px 5%;
   border-top: 1px solid #111;
-}
-.info-block {
-  margin-bottom: 30px;
   text-align: center;
 }
-.info-block h3 {
-  color: #bc13fe;
-  font-size: 14px;
-  margin-bottom: 8px;
+.footer-admin-wrap {
+  margin-bottom: 25px;
 }
-.info-block p {
-  color: #666;
-  font-size: 12px;
-  line-height: 1.4;
+.footer-admin-link {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #bc13fe;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: rgba(188, 19, 254, 0.1);
 }
 .main-footer {
-  text-align: center;
   padding: 20px 0;
   border-top: 1px solid #111;
   color: #333;
@@ -260,12 +253,4 @@ nav {
   object-fit: cover;
   border-radius: 5px;
   border: 1px solid #222;
-}
-.modal-info {
-  text-align: center;
-  margin-top: 20px;
-}
-#modal-product-name {
-  font-size: 18px;
-  margin-bottom: 20px;
 }
