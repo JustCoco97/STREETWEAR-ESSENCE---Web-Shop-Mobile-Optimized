@@ -133,10 +133,12 @@ nav {
   width: 100%;
   overflow-x: auto;
   padding: 0 5% 30px;
+  -webkit-overflow-scrolling: touch;
 }
 .slider-track {
   display: flex;
   gap: 15px;
+  flex-wrap: nowrap;
 }
 
 /* GRIGLIA PRODOTTI - FIX MOBILE */
@@ -258,4 +260,17 @@ nav {
   object-fit: cover;
   border-radius: 5px;
   border: 1px solid #222;
+}
+
+/* FIX SLIDER MOBILE */
+.slider-track .cat-card {
+  min-width: 160px;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.slider-track .cat-box {
+  width: 160px;
+  height: 200px;
+  aspect-ratio: unset;
 }
