@@ -1,3 +1,6 @@
+Admin · HTML
+Copia
+
 <!doctype html>
 <html lang="it">
   <head>
@@ -86,7 +89,6 @@
       .btn-pubblica:active {
         opacity: 0.8;
       }
-
       #status {
         margin-top: 12px;
         font-weight: bold;
@@ -95,7 +97,6 @@
         font-size: 14px;
         min-height: 20px;
       }
-
       .gestione-prodotti {
         margin-top: 35px;
         border-top: 1px solid #222;
@@ -149,32 +150,17 @@
       .btn-torna:hover {
         color: #fff;
       }
-
-      #login-section {
-        display: block;
-      }
-      #panel {
-        display: none;
-      }
     </style>
   </head>
   <body>
-    <!-- LOGIN -->
-    <div class="admin-wrap" id="login-section">
-      <h2>🔐 AREA RISERVATA</h2>
-      <span class="label-text">Password</span>
-      <input type="password" id="pass" placeholder="Inserisci password" />
-      <button class="btn-pubblica" onclick="accedi()">ENTRA</button>
-      <a href="index.html" class="btn-torna">← Torna al sito</a>
-    </div>
-
-    <!-- PANNELLO ADMIN -->
+ 
+    <!-- PANNELLO ADMIN - SI APRE DIRETTAMENTE -->
     <div class="admin-wrap" id="panel">
       <h2>📦 CARICA ARTICOLO</h2>
-
+ 
       <span class="label-text">Nome Prodotto</span>
       <input type="text" id="prod-name" placeholder="es: FELPA LOGO TRAP" />
-
+ 
       <span class="label-text">Categoria</span>
       <select id="prod-cat">
         <option value="preferiti">⭐ I NOSTRI PREFERITI (Home Slider)</option>
@@ -186,10 +172,10 @@
         <option value="scarpe">SCARPE</option>
         <option value="cappelli">CAPPELLI</option>
       </select>
-
+ 
       <span class="label-text">Foto Copertina *</span>
       <input type="file" id="main-img" accept="image/*" />
-
+ 
       <span class="label-text">Altre foto dettagli (max 5)</span>
       <div class="upload-grid">
         <input type="file" class="extra-img" accept="image/*" />
@@ -198,18 +184,18 @@
         <input type="file" class="extra-img" accept="image/*" />
         <input type="file" class="extra-img" accept="image/*" />
       </div>
-
+ 
       <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA SUL SITO</button>
       <div id="status"></div>
-
+ 
       <div class="gestione-prodotti">
         <h2>🗂 GESTISCI PRODOTTI</h2>
         <div id="lista-prodotti"></div>
       </div>
-
+ 
       <a href="index.html" class="btn-torna">← Torna al sito</a>
     </div>
-
+ 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
       import {
@@ -228,7 +214,7 @@
         uploadBytes,
         getDownloadURL,
       } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
-
+ 
       const firebaseConfig = {
         apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
         authDomain: "streetwearessence2026.firebaseapp.com",
@@ -237,36 +223,19 @@
         messagingSenderId: "926228477709",
         appId: "1:926228477709:web:8a15d11ac26022f1fee244",
       };
-
+ 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
       const storage = getStorage(app);
-
-      // LOGIN
-      window.accedi = function () {
-        if (document.getElementById("pass").value === "essence2026") {
-          document.getElementById("login-section").style.display = "none";
-          document.getElementById("panel").style.display = "block";
-          caricaProdotti();
-        } else {
-          alert("❌ Password sbagliata!");
-        }
-      };
-
-      // Permette di premere INVIO per fare login
-      document.getElementById("pass").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") window.accedi();
-      });
-
-      // CARICA LISTA PRODOTTI
+ 
+      // CARICA LISTA PRODOTTI SUBITO
       function caricaProdotti() {
         const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
         onSnapshot(q, (snapshot) => {
           const lista = document.getElementById("lista-prodotti");
           lista.innerHTML = "";
           if (snapshot.empty) {
-            lista.innerHTML =
-              "<p style='color:#555; font-size:13px;'>Nessun prodotto caricato.</p>";
+            lista.innerHTML = "<p style='color:#555; font-size:13px;'>Nessun prodotto caricato.</p>";
             return;
           }
           snapshot.forEach((docSnap) => {
@@ -282,14 +251,16 @@
           });
         });
       }
-
+ 
+      caricaProdotti();
+ 
       // ELIMINA PRODOTTO
       window.eliminaProdotto = async (id) => {
         if (confirm("Vuoi davvero eliminare questo prodotto?")) {
           await deleteDoc(doc(db, "prodotti", id));
         }
       };
-
+ 
       // PUBBLICA PRODOTTO
       document.getElementById("upload-btn").onclick = async () => {
         const status = document.getElementById("status");
@@ -297,36 +268,30 @@
         const sezione = document.getElementById("prod-cat").value;
         const mainImgFile = document.getElementById("main-img").files[0];
         const extraFiles = document.querySelectorAll(".extra-img");
-
+ 
         if (!name || !mainImgFile) {
           alert("⚠️ Nome e Foto copertina sono obbligatori!");
           return;
         }
-
+ 
         status.innerHTML = "⏳ CARICAMENTO IN CORSO...";
         document.getElementById("upload-btn").disabled = true;
-
+ 
         try {
-          // Carica foto principale
           const mainRef = ref(storage, `prodotti/${Date.now()}_main`);
           await uploadBytes(mainRef, mainImgFile);
           const mainUrl = await getDownloadURL(mainRef);
-
-          // Carica foto extra
+ 
           let extraUrls = [];
           for (let input of extraFiles) {
             if (input.files[0]) {
-              const extraRef = ref(
-                storage,
-                `prodotti/${Date.now()}_${Math.random()}`,
-              );
+              const extraRef = ref(storage, `prodotti/${Date.now()}_${Math.random()}`);
               await uploadBytes(extraRef, input.files[0]);
               const url = await getDownloadURL(extraRef);
               extraUrls.push(url);
             }
           }
-
-          // Salva su Firestore
+ 
           await addDoc(collection(db, "prodotti"), {
             nome: name,
             sezione: sezione,
@@ -334,7 +299,7 @@
             fotoExtra: extraUrls,
             data: new Date(),
           });
-
+ 
           status.innerHTML = "✅ ARTICOLO PUBBLICATO!";
           document.getElementById("prod-name").value = "";
           document.getElementById("main-img").value = "";
@@ -343,9 +308,9 @@
           status.innerHTML = "❌ ERRORE: " + e.message;
           console.error(e);
         }
-
+ 
         document.getElementById("upload-btn").disabled = false;
       };
     </script>
   </body>
-</html>
+</html
