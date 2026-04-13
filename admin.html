@@ -13,7 +13,6 @@
     />
     <style>
       body {
-        display: none;
         background: #000;
         color: #fff;
         font-family: "Inter", sans-serif;
@@ -59,7 +58,6 @@
         color: #fff;
         font-weight: bold;
         border-radius: 6px;
-        font-family: "Inter", sans-serif;
         font-size: 14px;
       }
       .upload-grid {
@@ -85,12 +83,6 @@
         font-weight: bold;
         color: #39ff14;
         text-align: center;
-        font-size: 14px;
-      }
-      .gestione-prodotti {
-        margin-top: 30px;
-        border-top: 1px solid #222;
-        padding-top: 20px;
       }
       .item-gestione {
         display: flex;
@@ -105,12 +97,6 @@
       .item-info {
         font-size: 13px;
         font-weight: 900;
-        flex: 1;
-      }
-      .item-info span {
-        color: #666;
-        font-size: 10px;
-        display: block;
       }
       .btn-elimina {
         background: #ff3131;
@@ -119,7 +105,6 @@
         padding: 8px 12px;
         border-radius: 4px;
         font-weight: 900;
-        font-size: 11px;
       }
       .btn-torna {
         display: block;
@@ -127,21 +112,18 @@
         color: #555;
         text-decoration: none;
         margin-top: 20px;
-        font-weight: bold;
       }
     </style>
   </head>
-  <body>
-    <div class="admin-wrap" id="panel">
+  <body id="admin-body" style="display: none">
+    <div class="admin-wrap">
       <h2>📦 CARICA ARTICOLO</h2>
-
-      <span class="label-text">Nome Prodotto</span>
-      <input type="text" id="prod-name" placeholder="es: FELPA LOGO TRAP" />
+      <input type="text" id="prod-name" placeholder="NOME PRODOTTO" />
 
       <span class="label-text">Categoria</span>
       <select id="prod-cat">
-        <option value="preferiti">⭐ I NOSTRI PREFERITI (Home Slider)</option>
-        <option value="vetrina">💎 TUTTI I PRODOTTI (Home Griglia)</option>
+        <option value="preferiti">⭐ PREFERITI (Slider)</option>
+        <option value="vetrina">💎 VETRINA (Griglia)</option>
         <option value="felpe">FELPE</option>
         <option value="tute">TUTE</option>
         <option value="giubbini">GIUBBINI</option>
@@ -150,10 +132,10 @@
         <option value="cappelli">CAPPELLI</option>
       </select>
 
-      <span class="label-text">Foto Copertina *</span>
+      <span class="label-text">Foto Copertina</span>
       <input type="file" id="main-img" accept="image/*" />
 
-      <span class="label-text">Altre foto dettagli (max 5)</span>
+      <span class="label-text">Altre foto (max 5)</span>
       <div class="upload-grid">
         <input type="file" class="extra-img" accept="image/*" />
         <input type="file" class="extra-img" accept="image/*" />
@@ -162,29 +144,30 @@
         <input type="file" class="extra-img" accept="image/*" />
       </div>
 
-      <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA SUL SITO</button>
+      <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA</button>
       <div id="status"></div>
 
-      <div class="gestione-prodotti">
-        <h2 style="font-size: 1rem">🗂 GESTISCI PRODOTTI</h2>
+      <div
+        style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px"
+      >
+        <h2 style="font-size: 1rem">🗂 GESTISCI</h2>
         <div id="lista-prodotti"></div>
       </div>
-
       <a href="index.html" class="btn-torna">← Torna al sito</a>
     </div>
 
-    <script type="module">
-      // PROTEZIONE
-      window.addEventListener("DOMContentLoaded", () => {
-        const pass = prompt("Password Amministratore:");
-        if (pass === "essence2026") {
-          document.body.style.display = "block";
-        } else {
-          alert("Accesso negato!");
-          window.location.href = "index.html";
-        }
-      });
+    <script>
+      // CONTROLLO PASSWORD IMMEDIATO
+      const pass = prompt("Password Amministratore:");
+      if (pass === "essence2026") {
+        document.getElementById("admin-body").style.display = "block";
+      } else {
+        alert("Accesso negato!");
+        window.location.href = "index.html";
+      }
+    </script>
 
+    <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
       import {
         getFirestore,
@@ -217,27 +200,22 @@
       const storage = getStorage(app);
 
       // LISTA PRODOTTI
-      function caricaProdotti() {
-        const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
-        onSnapshot(q, (snapshot) => {
-          const lista = document.getElementById("lista-prodotti");
-          lista.innerHTML = "";
-          snapshot.forEach((docSnap) => {
-            const p = docSnap.data();
-            lista.innerHTML += `
-              <div class="item-gestione">
-                <div class="item-info">${p.nome} <span>${p.sezione.toUpperCase()}</span></div>
-                <button class="btn-elimina" onclick="eliminaProdotto('${docSnap.id}')">ELIMINA</button>
-              </div>`;
-          });
+      const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
+      onSnapshot(q, (snapshot) => {
+        const lista = document.getElementById("lista-prodotti");
+        lista.innerHTML = "";
+        snapshot.forEach((docSnap) => {
+          const p = docSnap.data();
+          lista.innerHTML += `
+            <div class="item-gestione">
+              <div class="item-info">${p.nome} <span>${p.sezione.toUpperCase()}</span></div>
+              <button class="btn-elimina" onclick="eliminaProdotto('${docSnap.id}')">ELIMINA</button>
+            </div>`;
         });
-      }
-      caricaProdotti();
+      });
 
       window.eliminaProdotto = async (id) => {
-        if (confirm("Vuoi davvero eliminare questo prodotto?")) {
-          await deleteDoc(doc(db, "prodotti", id));
-        }
+        if (confirm("Eliminare?")) await deleteDoc(doc(db, "prodotti", id));
       };
 
       // UPLOAD
@@ -248,25 +226,23 @@
         const mainImgFile = document.getElementById("main-img").files[0];
         const extraFiles = document.querySelectorAll(".extra-img");
 
-        if (!name || !mainImgFile) {
-          alert("⚠️ Nome e Foto copertina sono obbligatori!");
-          return;
-        }
+        if (!name || !mainImgFile) return alert("Mancano dati!");
 
-        status.innerHTML = "⏳ CARICAMENTO IN CORSO...";
+        status.innerHTML = "⏳ CARICAMENTO...";
         document.getElementById("upload-btn").disabled = true;
 
         try {
-          const mainPath = "prodotti/" + Date.now() + "_main";
-          const mainRef = ref(storage, mainPath);
+          const mainRef = ref(storage, "prodotti/" + Date.now() + "_main");
           await uploadBytes(mainRef, mainImgFile);
           const mainUrl = await getDownloadURL(mainRef);
 
           let extraUrls = [];
           for (let input of extraFiles) {
             if (input.files[0]) {
-              const extraPath = "prodotti/" + Date.now() + "_" + Math.random();
-              const extraRef = ref(storage, extraPath);
+              const extraRef = ref(
+                storage,
+                "prodotti/" + Date.now() + "_" + Math.random(),
+              );
               await uploadBytes(extraRef, input.files[0]);
               const url = await getDownloadURL(extraRef);
               extraUrls.push(url);
@@ -281,13 +257,12 @@
             data: new Date(),
           });
 
-          status.innerHTML = "✅ ARTICOLO PUBBLICATO!";
-          alert("Prodotto caricato con successo!");
-          document.getElementById("prod-name").value = "";
-          document.getElementById("main-img").value = "";
-          extraFiles.forEach((i) => (i.value = ""));
+          status.innerHTML = "✅ PUBBLICATO!";
+          alert("Successo!");
+          location.reload();
         } catch (e) {
-          status.innerHTML = "❌ ERRORE: " + e.message;
+          status.innerHTML = "❌ ERRORE";
+          console.error(e);
         }
         document.getElementById("upload-btn").disabled = false;
       };
