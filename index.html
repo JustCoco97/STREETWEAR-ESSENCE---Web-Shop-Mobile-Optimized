@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Streetwear Essence | Official</title>
 
-    <link rel="stylesheet" href="style.css?v=1.2" />
+    <link rel="stylesheet" href="style.css?v=2.0" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap"
@@ -13,39 +13,41 @@
     />
 
     <style>
-      /* CSS DI EMERGENZA (Se style.css non carica, il sito non diventa bianco) */
+      /* --- CSS DI EMERGENZA INTERNO (Anti-Stalla) --- */
       body {
         background-color: #000 !important;
-        color: white;
+        color: white !important;
+        margin: 0;
+        font-family: "Inter", sans-serif;
       }
       #site-content {
-        background-color: #000;
+        background-color: #000 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      footer {
+        padding: 40px 0;
+        text-align: center;
+        background: #000;
       }
 
-      /* STILE TASTO GESTIONALE NEL FOOTER */
+      /* IL TASTO GESTIONALE */
       .footer-admin-wrap {
-        margin-top: 30px;
-        margin-bottom: 20px;
-        text-align: center;
-        width: 100%;
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
       }
       .footer-admin-link {
-        display: inline-block;
-        color: #fff !important;
+        color: #bc13fe !important;
         text-decoration: none;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: bold;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        border: 1px solid #bc13fe; /* Bordo viola */
-        padding: 10px 20px;
-        border-radius: 6px;
-        background: transparent;
-        transition: all 0.3s ease;
-      }
-      .footer-admin-link:hover {
-        background: #bc13fe;
-        color: #000 !important;
+        border: 2px solid #bc13fe;
+        padding: 12px 24px;
+        border-radius: 8px;
+        background: rgba(188, 19, 254, 0.1);
+        display: block;
       }
     </style>
   </head>
@@ -115,23 +117,15 @@
         <div class="info-container">
           <div class="info-block">
             <h3>QUALITÀ PREMIUM 💎</h3>
-            <p>
-              Selezioniamo solo i migliori materiali per garantirti il massimo
-              dello stile.
-            </p>
+            <p>Materiali top.</p>
           </div>
           <div class="info-block">
-            <h3>SPEDIZIONI WORLDWIDE 📦</h3>
-            <p>
-              Spediamo in tutta Italia con tracking attivo su ogni tuo ordine.
-            </p>
+            <h3>SPEDIZIONI 📦</h3>
+            <p>Tracking attivo.</p>
           </div>
           <div class="info-block">
             <h3>SUPPORT H24 💬</h3>
-            <p>
-              Il nostro team è disponibile su WhatsApp per assistenza ogni
-              giorno.
-            </p>
+            <p>WhatsApp sempre attivo.</p>
           </div>
         </div>
 
@@ -144,51 +138,8 @@
       </section>
     </div>
 
-    <div id="product-modal" class="modal">
-      <span class="close-modal" onclick="closeProduct()">&times;</span>
-      <div class="modal-content">
-        <div class="main-img-container">
-          <img id="modal-main-img" src="" />
-        </div>
-        <div class="thumb-container" id="modal-thumbs"></div>
-        <div class="modal-info">
-          <h2 id="modal-product-name"></h2>
-          <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
-            >SCRIVICI SU WHATSAPP ✅</a
-          >
-        </div>
-      </div>
-    </div>
-
     <script type="module" src="databasestreet.js"></script>
-
     <script>
-      function openProduct(name, mainImg, extraJson) {
-        const extra = JSON.parse(decodeURIComponent(extraJson));
-        const modalMainImg = document.getElementById("modal-main-img");
-        const thumbContainer = document.getElementById("modal-thumbs");
-        const waBtn = document.getElementById("modal-wa-btn");
-        document.getElementById("modal-product-name").innerText = name;
-        modalMainImg.src = mainImg;
-        waBtn.href =
-          "https://wa.me/393273187853?text=Ciao, vorrei info su: " + name;
-        thumbContainer.innerHTML = "";
-        const tutteLeFoto = [mainImg, ...extra];
-        tutteLeFoto.forEach((url) => {
-          if (url) {
-            const thumb = document.createElement("img");
-            thumb.src = url;
-            thumb.className = "thumb-img";
-            thumb.onclick = function () {
-              modalMainImg.src = url;
-            };
-            thumbContainer.appendChild(thumb);
-          }
-        });
-        document.getElementById("product-modal").style.display = "block";
-        document.body.style.overflow = "hidden";
-      }
-
       function closeProduct() {
         document.getElementById("product-modal").style.display = "none";
         document.body.style.overflow = "auto";
@@ -203,7 +154,7 @@
             document.getElementById("intro").style.display = "none";
             document.body.classList.remove("no-scroll");
           }, 600);
-        }, 4000);
+        }, 3000); // Ridotto a 3 secondi per testare più in fretta
       };
     </script>
   </body>
