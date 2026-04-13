@@ -10,24 +10,29 @@
       rel="stylesheet"
     />
     <style>
-      /* Stile discreto per il link gestionale nel footer */
+      /* STILE TASTO GESTIONALE NEL FOOTER */
+      .footer-admin-wrap {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
       .footer-admin-link {
         display: inline-block;
-        margin-bottom: 15px;
-        color: #444;
+        color: #666; /* Grigio scuro di base */
         text-decoration: none;
-        font-size: 10px;
+        font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        border: 1px solid #222;
-        padding: 5px 12px;
-        border-radius: 4px;
-        transition: 0.3s;
+        letter-spacing: 2px;
+        border: 1px solid #333;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
       }
       .footer-admin-link:hover {
-        color: #bc13fe;
+        color: #bc13fe; /* Diventa viola al passaggio */
         border-color: #bc13fe;
+        background: rgba(188, 19, 254, 0.05);
       }
     </style>
   </head>
@@ -118,7 +123,9 @@
         </div>
 
         <footer class="main-footer">
-          <a href="admin.html" class="footer-admin-link">Area Gestionale</a>
+          <div class="footer-admin-wrap">
+            <a href="admin.html" class="footer-admin-link">Area Gestionale</a>
+          </div>
           <p>&copy; 2026 STREETWEAR ESSENCE - ALL RIGHTS RESERVED</p>
         </footer>
       </section>
