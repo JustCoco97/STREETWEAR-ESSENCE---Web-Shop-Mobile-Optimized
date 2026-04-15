@@ -64,9 +64,21 @@
         color: #39ff14;
         text-align: center;
       }
+      .btn-torna {
+        display: block;
+        text-align: center;
+        color: #555;
+        text-decoration: none;
+        font-size: 12px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      .btn-torna:hover {
+        color: #fff;
+      }
     </style>
   </head>
-  <body id="admin-body" style="display: none">
+  <body>
     <div class="admin-wrap">
       <h2>📦 CARICA ARTICOLO</h2>
       <input type="text" id="prod-name" placeholder="NOME PRODOTTO" />
@@ -85,17 +97,8 @@
       <input type="file" id="main-img" accept="image/*" />
       <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA</button>
       <div id="status"></div>
+      <a href="index.html" class="btn-torna">← Torna al sito</a>
     </div>
-
-    <script>
-      const pass = prompt("Password:");
-      if (pass === "essence2026") {
-        document.getElementById("admin-body").style.display = "block";
-      } else {
-        alert("Negato");
-        window.location.href = "index.html";
-      }
-    </script>
 
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
@@ -115,7 +118,7 @@
         apiKey: "AIzaSyBv9ZAOQyljdW41ZDTuxNacXzqegXEvn94",
         authDomain: "streetwearessence2026.firebaseapp.com",
         projectId: "streetwearessence2026",
-        storageBucket: "streetwearessence2026.firebasestorage.app", // Verificato dallo screenshot
+        storageBucket: "streetwearessence2026.firebasestorage.app",
         messagingSenderId: "926228477709",
         appId: "1:926228477709:web:8a15d11ac26022f1fee244",
       };
@@ -135,17 +138,13 @@
         document.getElementById("upload-btn").disabled = true;
 
         try {
-          // Creazione riferimento cartella prodotti
           const storageRef = ref(
             storage,
             "prodotti/" + Date.now() + "_" + file.name,
           );
-
-          // Upload
           const snapshot = await uploadBytes(storageRef, file);
           const url = await getDownloadURL(snapshot.ref);
 
-          // Salvataggio nel database
           await addDoc(collection(db, "prodotti"), {
             nome: name,
             sezione: document.getElementById("prod-cat").value,
@@ -153,13 +152,13 @@
             data: new Date(),
           });
 
-          status.innerHTML = "✅ SUCCESSO!";
-          alert("Fatto! La cartella 'prodotti' è stata aggiornata.");
-          location.reload();
+          status.innerHTML = "✅ PUBBLICATO!";
+          document.getElementById("prod-name").value = "";
+          document.getElementById("main-img").value = "";
+          document.getElementById("upload-btn").disabled = false;
         } catch (e) {
           console.error(e);
-          alert("Errore: " + e.message);
-          status.innerHTML = "❌ ERRORE";
+          status.innerHTML = "❌ ERRORE: " + e.message;
           document.getElementById("upload-btn").disabled = false;
         }
       };
