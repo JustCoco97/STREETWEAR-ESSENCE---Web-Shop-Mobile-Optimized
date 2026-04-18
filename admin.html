@@ -15,8 +15,6 @@
         font-family: "Inter", sans-serif;
         padding: 15px;
       }
-
-      /* SCHERMATA LOGIN */
       #login-overlay {
         position: fixed;
         top: 0;
@@ -31,7 +29,6 @@
         justify-content: center;
         text-align: center;
       }
-
       .login-box {
         background: #0a0a0a;
         padding: 40px;
@@ -40,7 +37,6 @@
         max-width: 350px;
         width: 90%;
       }
-
       .admin-wrap {
         max-width: 500px;
         margin: 20px auto;
@@ -63,7 +59,6 @@
         font-size: 1.5rem;
         margin-bottom: 10px;
       }
-
       .label-text {
         font-size: 0.7rem;
         color: #666;
@@ -81,7 +76,7 @@
         border: 1px solid #222;
         color: #fff;
         border-radius: 6px;
-        box-sizing: border-box; /* Evita che l'input esca dai bordi */
+        box-sizing: border-box;
       }
       .btn-pubblica,
       .btn-login {
@@ -110,8 +105,39 @@
         margin-top: 20px;
         font-weight: bold;
       }
-      .btn-torna:hover {
-        color: #fff;
+
+      /* NUOVA SEZIONE GESTIONE */
+      .gestione-prodotti {
+        margin-top: 40px;
+        border-top: 1px dashed #333;
+        padding-top: 20px;
+      }
+      .prod-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #111;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        border: 1px solid #1a1a1a;
+      }
+      .prod-info {
+        font-size: 0.8rem;
+      }
+      .prod-info b {
+        color: #39ff14;
+        display: block;
+        text-transform: uppercase;
+      }
+      .btn-elimina {
+        background: #ff4444;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
       }
     </style>
   </head>
@@ -163,6 +189,12 @@
       <input type="file" id="main-img" accept="image/*" />
       <button class="btn-pubblica" id="upload-btn">🚀 PUBBLICA</button>
       <div id="status"></div>
+
+      <div class="gestione-prodotti">
+        <h2 style="font-size: 1rem; color: #555">🛠️ GESTISCI INVENTARIO</h2>
+        <div id="lista-prodotti"></div>
+      </div>
+
       <a href="index.html" class="btn-torna">← Torna al sito</a>
     </div>
 
@@ -172,6 +204,12 @@
         getFirestore,
         addDoc,
         collection,
+        getDocs,
+        deleteDoc,
+        doc,
+        onSnapshot,
+        query,
+        orderBy,
       } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
       import {
         getStorage,
@@ -193,7 +231,7 @@
       const db = getFirestore(app);
       const storage = getStorage(app);
 
-      // --- LOGICA LOGIN ---
+      // --- LOGIN ---
       const loginBtn = document.getElementById("login-btn");
       const passField = document.getElementById("pass-field");
       const overlay = document.getElementById("login-overlay");
@@ -202,18 +240,52 @@
       function controllaAccesso() {
         if (passField.value === "essence2026") {
           overlay.style.display = "none";
+          caricaLista(); // Carica la lista solo dopo il login
         } else {
           errorMsg.style.display = "block";
           passField.value = "";
         }
       }
-
       loginBtn.onclick = controllaAccesso;
       passField.addEventListener("keypress", (e) => {
         if (e.key === "Enter") controllaAccesso();
       });
 
-      // --- LOGICA UPLOAD (QUELLA CHE GIA' FUNZIONA) ---
+      // --- CARICAMENTO LISTA PRODOTTI ---
+      function caricaLista() {
+        const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
+        onSnapshot(q, (snapshot) => {
+          const lista = document.getElementById("lista-prodotti");
+          lista.innerHTML = "";
+          snapshot.forEach((docSnap) => {
+            const p = docSnap.data();
+            const item = document.createElement("div");
+            item.className = "prod-item";
+            item.innerHTML = `
+              <div class="prod-info">
+                <b>${p.nome}</b>
+                <span>cat: ${p.sezione}</span>
+              </div>
+              <button class="btn-elimina" onclick="eliminaProdotto('${docSnap.id}')">🗑️</button>
+            `;
+            lista.appendChild(item);
+          });
+        });
+      }
+
+      // --- FUNZIONE ELIMINA ---
+      window.eliminaProdotto = async (id) => {
+        if (confirm("Vuoi davvero eliminare questo articolo?")) {
+          try {
+            await deleteDoc(doc(db, "prodotti", id));
+            alert("Rimosso con successo!");
+          } catch (e) {
+            alert("Errore: " + e.message);
+          }
+        }
+      };
+
+      // --- LOGICA UPLOAD ---
       document.getElementById("upload-btn").onclick = async () => {
         const name = document.getElementById("prod-name").value;
         const file = document.getElementById("main-img").files[0];
@@ -225,10 +297,13 @@
         document.getElementById("upload-btn").disabled = true;
 
         try {
+          // Nome file pulito: NomeProdotto_Data
+          const cleanName = name.replace(/\s+/g, "-").toLowerCase();
           const storageRef = ref(
             storage,
-            "prodotti/" + Date.now() + "_" + file.name,
+            "prodotti/" + cleanName + "_" + Date.now(),
           );
+
           const snapshot = await uploadBytes(storageRef, file);
           const url = await getDownloadURL(snapshot.ref);
 
