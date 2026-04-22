@@ -127,7 +127,7 @@
         <div class="modal-info">
           <h2 id="modal-product-name"></h2>
           <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
-            >WHATSAPP ✅</a
+            >SCRIVICI SU WHATSAPP ✅</a
           >
         </div>
       </div>
@@ -138,12 +138,17 @@
       function openProduct(name, mainImg, extraJson) {
         const extra = JSON.parse(decodeURIComponent(extraJson));
         const mainDisplay = document.getElementById("modal-main-img");
+        const waBtn = document.getElementById("modal-wa-btn");
 
+        // Imposta nome e immagine principale
         document.getElementById("modal-product-name").innerText = name;
         mainDisplay.src = mainImg;
-        document.getElementById("modal-wa-btn").href =
+
+        // Configura il bottone WhatsApp (Link + Testo corretto)
+        waBtn.href =
           "https://wa.me/393273187853?text=Ciao, vorrei info su: " +
           encodeURIComponent(name);
+        waBtn.innerHTML = "SCRIVICI SU WHATSAPP ✅";
 
         const thumbContainer = document.getElementById("modal-thumbs");
         thumbContainer.innerHTML = "";

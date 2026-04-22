@@ -141,7 +141,7 @@ nav {
   flex-wrap: nowrap;
 }
 
-/* GRIGLIA PRODOTTI - FIX MOBILE */
+/* GRIGLIA PRODOTTI */
 .categories-grid {
   width: 95%;
   margin: 0 auto;
@@ -149,16 +149,14 @@ nav {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   padding-bottom: 40px;
-  overflow: hidden;
 }
 
-/* LE CLASSI DEL DATABASE */
+/* CARD PRODOTTI */
 .cat-card {
   background: #111;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #222;
-  min-width: 0;
 }
 .cat-box {
   width: 100%;
@@ -171,55 +169,43 @@ nav {
   font-size: 13px;
   font-weight: 900;
   text-transform: uppercase;
-  margin: 10px 0;
+  margin: 12px 0;
   text-align: center;
   color: #fff;
   padding: 0 5px;
-  word-break: break-word;
 }
-.wa-cat-btn {
+
+/* BOTTONE WHATSAPP - STILE UNIVERSALE (Griglia e Modal) */
+.wa-cat-btn,
+.wa-order-btn {
   display: block;
   background: #25d366;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 5px;
+  color: #fff !important;
+  text-decoration: none !important;
+  padding: 12px;
+  border-radius: 6px;
   font-size: 11px;
   font-weight: 900;
   text-align: center;
   margin: 0 8px 10px;
-}
-
-/* FOOTER E TASTO GESTIONALE */
-.info-section {
-  background: #080808;
-  padding: 40px 5%;
-  border-top: 1px solid #111;
-  text-align: center;
-}
-.footer-admin-wrap {
-  margin-bottom: 25px;
-}
-.footer-admin-link {
-  display: inline-block;
-  color: #fff;
-  text-decoration: none;
-  border: 1px solid #bc13fe;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: bold;
   text-transform: uppercase;
-  background: rgba(188, 19, 254, 0.1);
-}
-.main-footer {
-  padding: 20px 0;
-  border-top: 1px solid #111;
-  color: #333;
-  font-size: 10px;
+  transition: transform 0.2s;
 }
 
-/* MODAL AGGIORNATO CHIRURGICAMENTE */
+/* STILE SPECIFICO PER IL MODAL (Più grande) */
+.wa-order-btn {
+  margin: 20px 0 0 0;
+  font-size: 13px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.wa-cat-btn:active,
+.wa-order-btn:active {
+  transform: scale(0.96);
+}
+
+/* MODAL */
 .modal {
   display: none;
   position: fixed;
@@ -244,11 +230,10 @@ nav {
   margin: 50px auto;
 }
 
-/* FIX MISURA FOTO MODAL */
 #modal-main-img {
   width: 100%;
-  height: 400px; /* Altezza fissa per mobile */
-  object-fit: cover; /* Riempie lo spazio senza deformare */
+  height: 400px;
+  object-fit: cover;
   border-radius: 10px;
   background: #0a0a0a;
 }
@@ -259,7 +244,7 @@ nav {
   margin-top: 15px;
   overflow-x: auto;
   padding-bottom: 10px;
-  scrollbar-width: none; /* Nasconde barra scorrimento */
+  scrollbar-width: none;
 }
 .thumb-container::-webkit-scrollbar {
   display: none;
@@ -268,19 +253,18 @@ nav {
 .thumb-img {
   width: 70px;
   height: 70px;
-  object-fit: cover; /* Rende le miniature quadrate perfette */
+  object-fit: cover;
   border-radius: 5px;
   border: 2px solid #222;
   flex-shrink: 0;
 }
 
-/* FIX SLIDER MOBILE */
+/* SLIDER */
 .slider-track .cat-card {
   min-width: 160px;
   width: 160px;
   flex-shrink: 0;
 }
-
 .slider-track .cat-box {
   width: 160px;
   height: 200px;
