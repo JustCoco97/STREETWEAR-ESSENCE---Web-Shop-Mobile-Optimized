@@ -35,10 +35,13 @@ onSnapshot(q, (snapshot) => {
     const nome = p.nome || "Prodotto";
     const img = p.fotoPrincipale || "";
     const cat = p.sezione || "";
-    const extra = encodeURIComponent(JSON.stringify(p.fotoExtra || []));
+
+    // Sincronizzato con l'Admin: leggiamo "extraFoto"
+    const extra = encodeURIComponent(JSON.stringify(p.extraFoto || []));
 
     if (!img) return;
 
+    // Card pulita con gestione apostrofi per evitare errori nel clic
     const card = `
       <div class="cat-card">
         <div class="cat-box" 
