@@ -16,12 +16,14 @@ const firebaseConfig = {
   appId: "1:926228477709:web:8a15d11ac26022f1fee244",
 };
 
+// Inizializza Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const sliderTrack = document.getElementById("slider-track");
 const categoriesGrid = document.getElementById("categories-grid");
 
+// Recupera i prodotti ordinati per data
 const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
 
 onSnapshot(q, (snapshot) => {
@@ -40,7 +42,7 @@ onSnapshot(q, (snapshot) => {
     const card = `
       <div class="cat-card">
         <div class="cat-box" 
-             style="background-image: url('${img}');"
+             style="background-image: url('${img}'); background-size:cover; background-position:center; aspect-ratio:1/1;"
              onclick="openProduct('${nome.replace(/'/g, "\\'")}', '${img}', '${extra}')">
         </div>
         <div class="product-name">${nome}</div>
@@ -49,12 +51,19 @@ onSnapshot(q, (snapshot) => {
       </div>
     `;
 
-    // LOGICA FILTRI HOME
+    // --- NUOVA LOGICA COERENTE ---
+
+    // 1. Se scrivi "preferiti", va nello slider in alto
     if (cat === "preferiti") {
       if (sliderTrack) sliderTrack.innerHTML += card;
-    } else if (cat === "" || cat === "home") {
-      // Mostra in "Tutti i prodotti" solo se non ha categoria o è segnato come home
+    }
+
+    // 2. Se scrivi "tutti i prodotti" oppure lasci VUOTO, va nella griglia Home
+    if (cat === "tutti i prodotti" || cat === "" || cat === "home") {
       if (categoriesGrid) categoriesGrid.innerHTML += card;
     }
+
+    // NOTA: Se scrivi "felpe", "scarpe", ecc., non entrerà in questi IF
+    // e apparirà solo nelle pagine delle rispettive categorie.
   });
 });
