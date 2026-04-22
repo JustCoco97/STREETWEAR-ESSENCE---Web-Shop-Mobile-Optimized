@@ -2,7 +2,10 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Streetwear Essence | Categorie</title>
     <link rel="stylesheet" href="style.css" />
     <link
@@ -34,7 +37,6 @@
             >MAGLIETTE</a
           >
           <a href="categoria.html?tipo=scarpe" class="filter-btn">SCARPE</a>
-          <a href="categoria.html?tipo=cappelli" class="filter-btn">CAPPELLI</a>
         </nav>
       </div>
     </header>
@@ -52,7 +54,7 @@
         <div class="modal-info">
           <h2 id="modal-product-name"></h2>
           <a href="#" id="modal-wa-btn" class="wa-order-btn" target="_blank"
-            >ORDINA SU WHATSAPP</a
+            >SCRIVICI SU WHATSAPP ✅</a
           >
         </div>
       </div>
@@ -66,7 +68,6 @@
         getDocs,
         query,
         where,
-        limit,
       } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -93,18 +94,16 @@
 
       async function caricaProdottiFiltrati() {
         try {
-          // Limite di 20 prodotti per categoria
           const q = query(
             collection(db, "prodotti"),
             where("sezione", "==", tipoScelto),
-            limit(20),
           );
           const querySnapshot = await getDocs(q);
           grid.innerHTML = "";
 
           if (querySnapshot.empty) {
             grid.innerHTML =
-              "<p style='color: #666; text-align:center; width:100%; font-weight:bold;'>Nessun prodotto disponibile.</p>";
+              "<p style='color: #666; text-align:center; width:100%; font-weight:bold;'>Nessun prodotto in questa categoria.</p>";
             return;
           }
 
@@ -112,21 +111,19 @@
             const p = doc.data();
             const nomePulito = p.nome.replace(/'/g, "\\'");
             const extraStr = encodeURIComponent(
-              JSON.stringify(p.fotoExtra || []),
+              JSON.stringify(p.extraFoto || []),
             );
 
             grid.innerHTML += `
                 <div class="cat-card">
-                  <div class="cat-box" style="background-image:url('${p.fotoPrincipale}'); background-size:cover; background-position:center; aspect-ratio: 1/1;" 
+                  <div class="cat-box" style="background-image:url('${p.fotoPrincipale}');" 
                        onclick="openProduct('${nomePulito}', '${p.fotoPrincipale}', '${extraStr}')"></div>
                   <div class="product-name">${p.nome}</div>
-                  <a href="https://wa.me/393273187853?text=Info per ${p.nome}" class="wa-cat-btn" target="_blank"><span>ORDINA ORA</span></a>
+                  <a href="https://wa.me/393273187853?text=Ciao, vorrei info su: ${p.nome}" class="wa-cat-btn" target="_blank">SCRIVICI SU WHATSAPP ✅</a>
                 </div>`;
           });
         } catch (e) {
-          console.error(e);
-          grid.innerHTML =
-            "<p style='color:red;'>Errore tecnico nel caricamento.</p>";
+          grid.innerHTML = "<p style='color:red;'>Errore nel caricamento.</p>";
         }
       }
 
@@ -135,10 +132,14 @@
         const modalMainImg = document.getElementById("modal-main-img");
         const thumbContainer = document.getElementById("modal-thumbs");
         const waBtn = document.getElementById("modal-wa-btn");
+
         document.getElementById("modal-product-name").innerText = name;
         modalMainImg.src = mainImg;
         waBtn.href =
-          "https://wa.me/393273187853?text=Ciao, vorrei info su: " + name;
+          "https://wa.me/393273187853?text=Ciao, vorrei info su: " +
+          encodeURIComponent(name);
+        waBtn.innerHTML = "SCRIVICI SU WHATSAPP ✅";
+
         thumbContainer.innerHTML = "";
         const tutteLeFoto = [mainImg, ...extra];
         tutteLeFoto.forEach((url) => {
