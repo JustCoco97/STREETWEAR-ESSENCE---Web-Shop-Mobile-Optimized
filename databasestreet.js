@@ -33,11 +33,11 @@ onSnapshot(q, (snapshot) => {
       const p = docSnap.data();
       const nome = p.nome || "Prodotto";
       const img = p.fotoPrincipale || "";
-      const cat = p.sezione || "";
+      const cat = p.sezione || ""; // Prende il valore dall'admin
 
-      // SICUREZZA: Se extraFoto non esiste, usa un array vuoto
-      const fotoPerGallery = p.extraFoto || p.fotoExtra || [];
-      const extra = encodeURIComponent(JSON.stringify(fotoPerGallery));
+      // SICUREZZA: Gestione gallery immagini
+      const gallery = p.extraFoto || [];
+      const extra = encodeURIComponent(JSON.stringify(gallery));
 
       if (!img) return;
 
@@ -53,16 +53,20 @@ onSnapshot(q, (snapshot) => {
         </div>
       `;
 
-      // LOGICA FILTRI (Super flessibile)
-      if (cat.includes("PREFERITI")) {
+      // LOGICA FILTRI CORRETTA
+      // 1. Se contiene "PREFERITI", va nello slider
+      if (cat.toString().includes("PREFERITI")) {
         if (sliderTrack) sliderTrack.innerHTML += card;
       }
 
-      if (cat.includes("VETRINA") || cat === "" || cat === "home") {
+      // 2. Se contiene "VETRINA" o se è vuoto (prodotto senza categoria), va nella griglia Home
+      if (cat.toString().includes("VETRINA") || cat === "") {
         if (categoriesGrid) categoriesGrid.innerHTML += card;
       }
+
+      // Se selezioni FELPE, TUTE, ecc., non entra in questi IF e non crea doppioni in Home!
     } catch (err) {
-      console.error("Errore su un prodotto:", err);
+      console.error("Errore nel caricamento prodotto:", err);
     }
   });
 });

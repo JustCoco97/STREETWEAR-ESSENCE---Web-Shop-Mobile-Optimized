@@ -94,6 +94,7 @@
 
       async function caricaProdottiFiltrati() {
         try {
+          // Carica solo i prodotti della categoria scelta nel menu nav
           const q = query(
             collection(db, "prodotti"),
             where("sezione", "==", tipoScelto),
@@ -107,22 +108,24 @@
             return;
           }
 
-          querySnapshot.forEach((doc) => {
-            const p = doc.data();
+          querySnapshot.forEach((docSnap) => {
+            const p = docSnap.data();
             const nomePulito = p.nome.replace(/'/g, "\\'");
-            const extraStr = encodeURIComponent(
-              JSON.stringify(p.extraFoto || []),
-            );
+
+            // Sicurezza gallery
+            const gallery = p.extraFoto || [];
+            const extraStr = encodeURIComponent(JSON.stringify(gallery));
 
             grid.innerHTML += `
-                <div class="cat-card">
-                  <div class="cat-box" style="background-image:url('${p.fotoPrincipale}');" 
-                       onclick="openProduct('${nomePulito}', '${p.fotoPrincipale}', '${extraStr}')"></div>
-                  <div class="product-name">${p.nome}</div>
-                  <a href="https://wa.me/393273187853?text=Ciao, vorrei info su: ${p.nome}" class="wa-cat-btn" target="_blank">SCRIVICI SU WHATSAPP ✅</a>
-                </div>`;
+              <div class="cat-card">
+                <div class="cat-box" style="background-image:url('${p.fotoPrincipale}'); background-size:cover; background-position:center; aspect-ratio:1/1;" 
+                     onclick="openProduct('${nomePulito}', '${p.fotoPrincipale}', '${extraStr}')"></div>
+                <div class="product-name">${p.nome}</div>
+                <a href="https://wa.me/393273187853?text=Ciao, vorrei info su: ${p.nome}" class="wa-cat-btn" target="_blank">SCRIVICI SU WHATSAPP ✅</a>
+              </div>`;
           });
         } catch (e) {
+          console.error(e);
           grid.innerHTML = "<p style='color:red;'>Errore nel caricamento.</p>";
         }
       }
@@ -138,7 +141,6 @@
         waBtn.href =
           "https://wa.me/393273187853?text=Ciao, vorrei info su: " +
           encodeURIComponent(name);
-        waBtn.innerHTML = "SCRIVICI SU WHATSAPP ✅";
 
         thumbContainer.innerHTML = "";
         const tutteLeFoto = [mainImg, ...extra];
