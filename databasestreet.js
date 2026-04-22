@@ -16,14 +16,12 @@ const firebaseConfig = {
   appId: "1:926228477709:web:8a15d11ac26022f1fee244",
 };
 
-// Inizializza Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const sliderTrack = document.getElementById("slider-track");
 const categoriesGrid = document.getElementById("categories-grid");
 
-// Recupera i prodotti ordinati per data
 const q = query(collection(db, "prodotti"), orderBy("data", "desc"));
 
 onSnapshot(q, (snapshot) => {
@@ -34,7 +32,7 @@ onSnapshot(q, (snapshot) => {
     const p = docSnap.data();
     const nome = p.nome || "Prodotto";
     const img = p.fotoPrincipale || "";
-    const cat = p.sezione || "";
+    const cat = p.sezione || ""; // Qui arriva quello che selezioni nel menu
     const extra = encodeURIComponent(JSON.stringify(p.extraFoto || []));
 
     if (!img) return;
@@ -51,19 +49,19 @@ onSnapshot(q, (snapshot) => {
       </div>
     `;
 
-    // --- NUOVA LOGICA COERENTE ---
+    // --- LOGICA BASATA SUL TUO MENU A TENDINA ---
 
-    // 1. Se scrivi "preferiti", va nello slider in alto
-    if (cat === "preferiti") {
+    // Se selezioni la prima voce (Stella)
+    if (cat === "⭐ PREFERITI (Slider)") {
       if (sliderTrack) sliderTrack.innerHTML += card;
     }
 
-    // 2. Se scrivi "tutti i prodotti" oppure lasci VUOTO, va nella griglia Home
-    if (cat === "tutti i prodotti" || cat === "" || cat === "home") {
+    // Se selezioni la seconda voce (Diamante) o se carichi senza categoria
+    if (cat === "💎 VETRINA (Griglia)" || cat === "") {
       if (categoriesGrid) categoriesGrid.innerHTML += card;
     }
 
-    // NOTA: Se scrivi "felpe", "scarpe", ecc., non entrerà in questi IF
-    // e apparirà solo nelle pagine delle rispettive categorie.
+    // Per tutte le altre voci (FELPE, TUTE, ecc.), il prodotto NON apparirà in Home
+    // ma solo nelle pagine categoria.html dove il filtro cerca il nome esatto.
   });
 });
