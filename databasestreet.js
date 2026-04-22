@@ -29,39 +29,40 @@ onSnapshot(q, (snapshot) => {
   if (categoriesGrid) categoriesGrid.innerHTML = "";
 
   snapshot.forEach((docSnap) => {
-    const p = docSnap.data();
-    const nome = p.nome || "Prodotto";
-    const img = p.fotoPrincipale || "";
-    const cat = p.sezione || ""; // Qui arriva quello che selezioni nel menu
-    const extra = encodeURIComponent(JSON.stringify(p.extraFoto || []));
+    try {
+      const p = docSnap.data();
+      const nome = p.nome || "Prodotto";
+      const img = p.fotoPrincipale || "";
+      const cat = p.sezione || "";
 
-    if (!img) return;
+      // SICUREZZA: Se extraFoto non esiste, usa un array vuoto
+      const fotoPerGallery = p.extraFoto || p.fotoExtra || [];
+      const extra = encodeURIComponent(JSON.stringify(fotoPerGallery));
 
-    const card = `
-      <div class="cat-card">
-        <div class="cat-box" 
-             style="background-image: url('${img}'); background-size:cover; background-position:center; aspect-ratio:1/1;"
-             onclick="openProduct('${nome.replace(/'/g, "\\'")}', '${img}', '${extra}')">
+      if (!img) return;
+
+      const card = `
+        <div class="cat-card">
+          <div class="cat-box" 
+               style="background-image: url('${img}'); background-size:cover; background-position:center; aspect-ratio:1/1;"
+               onclick="openProduct('${nome.replace(/'/g, "\\'")}', '${img}', '${extra}')">
+          </div>
+          <div class="product-name">${nome}</div>
+          <a href="https://wa.me/393273187853?text=Ciao, vorrei info su: ${nome}" 
+             class="wa-cat-btn" target="_blank">SCRIVICI SU WHATSAPP ✅</a>
         </div>
-        <div class="product-name">${nome}</div>
-        <a href="https://wa.me/393273187853?text=Ciao, vorrei info su: ${nome}" 
-           class="wa-cat-btn" target="_blank">SCRIVICI SU WHATSAPP ✅</a>
-      </div>
-    `;
+      `;
 
-    // --- LOGICA BASATA SUL TUO MENU A TENDINA ---
+      // LOGICA FILTRI (Super flessibile)
+      if (cat.includes("PREFERITI")) {
+        if (sliderTrack) sliderTrack.innerHTML += card;
+      }
 
-    // Se selezioni la prima voce (Stella)
-    if (cat === "⭐ PREFERITI (Slider)") {
-      if (sliderTrack) sliderTrack.innerHTML += card;
+      if (cat.includes("VETRINA") || cat === "" || cat === "home") {
+        if (categoriesGrid) categoriesGrid.innerHTML += card;
+      }
+    } catch (err) {
+      console.error("Errore su un prodotto:", err);
     }
-
-    // Se selezioni la seconda voce (Diamante) o se carichi senza categoria
-    if (cat === "💎 VETRINA (Griglia)" || cat === "") {
-      if (categoriesGrid) categoriesGrid.innerHTML += card;
-    }
-
-    // Per tutte le altre voci (FELPE, TUTE, ecc.), il prodotto NON apparirà in Home
-    // ma solo nelle pagine categoria.html dove il filtro cerca il nome esatto.
   });
 });
