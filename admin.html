@@ -71,8 +71,6 @@
         border-radius: 6px;
         box-sizing: border-box;
       }
-
-      /* GRIGLIA SLOT FOTO */
       .photo-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -97,7 +95,6 @@
         background: transparent;
         border: none;
       }
-
       .btn-pubblica,
       .btn-login {
         width: 100%;
@@ -117,7 +114,6 @@
         text-align: center;
         font-size: 0.9rem;
       }
-
       .gestione-prodotti {
         margin-top: 40px;
         border-top: 1px dashed #333;
@@ -168,8 +164,8 @@
       <input type="text" id="prod-name" placeholder="NOME PRODOTTO" />
       <span class="label-text">Categoria</span>
       <select id="prod-cat">
-        <option value="preferiti">⭐ PREFERITI (Slider)</option>
-        <option value="vetrina">💎 VETRINA (Griglia)</option>
+        <option value="⭐ PREFERITI (Slider)">⭐ PREFERITI (Slider)</option>
+        <option value="💎 VETRINA (Griglia)">💎 VETRINA (Griglia)</option>
         <option value="felpe">FELPE</option>
         <option value="tute">TUTE</option>
         <option value="giubbini">GIUBBINI</option>
@@ -183,7 +179,8 @@
         <div class="photo-slot main">
           <span class="label-text" style="color: #39ff14"
             >1. Foto Principale</span
-          ><input type="file" id="img-1" accept="image/*" />
+          >
+          <input type="file" id="img-1" accept="image/*" />
         </div>
         <div class="photo-slot">
           <span class="label-text">2. Dettaglio</span
@@ -261,7 +258,6 @@
       const db = getFirestore(app);
       const storage = getStorage(app);
 
-      // Login rapido
       document.getElementById("login-btn").onclick = () => {
         if (document.getElementById("pass-field").value === "essence2026") {
           document.getElementById("login-overlay").style.display = "none";
@@ -290,6 +286,7 @@
 
       document.getElementById("upload-btn").onclick = async () => {
         const name = document.getElementById("prod-name").value;
+        const catValue = document.getElementById("prod-cat").value;
         const status = document.getElementById("status");
         const inputs = [1, 2, 3, 4, 5, 6].map(
           (i) => document.getElementById(`img-${i}`).files[0],
@@ -319,9 +316,9 @@
 
           await addDoc(collection(db, "prodotti"), {
             nome: name,
-            sezione: document.getElementById("prod-cat").value,
+            sezione: catValue,
             fotoPrincipale: urls[0],
-            extraFoto: urls.slice(1), // Salva le altre foto in un array
+            extraFoto: urls.slice(1),
             data: new Date(),
           });
 
